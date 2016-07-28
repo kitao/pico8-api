@@ -1,5 +1,7 @@
-# PICO-8 API
+# pico8-api-jp
 
-Official PICO-8 API with a lovely design !
+Japanese version of the PICO-8 API cheatsheet by Neko250.
 
-Source is available through the [gh-pages](https://github.com/Neko250/pico8-api/tree/gh-pages) branch.
+Neko250さん作成のPICO-8 API 早見表の日本語版です。
+
+- [pico-8 api cheatsheet 日本語版](https://kitao.github.io/pico8-api-jp/)
