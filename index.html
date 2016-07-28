@@ -173,24 +173,24 @@ mset(x, y, v) -- マップのセルの値を設定する</code></pre>
 
         <!-- MATH -->
         <div role="tabpanel" class="tab-pane fade" id="math">
-          <pre><code class="lua">-32768.0 .. 32767.99 -- 値が表現できる範囲
+          <pre><code class="lua">-32768.0 .. 32767.99 -- 値の範囲
 abs(x) -- xの絶対値
-atan2(dx, dy) -- (dx, dy)を0-1の角度に変換する
+atan2(dx, dy) -- (dx, dy)を0から1の角度に変換する
 band(x, y) -- ビット単位の論理積
 bnot(x) -- ビット単位の否定
 bor(x, y) -- ビット単位の論理和
 bxor(x, y) -- ビット単位の排他的論理和
-cos(x) -- xの余弦, [0..1]
+cos(x) -- xの余弦, 1周期は0から1の範囲
 flr(x) -- 切り捨て
--flr(-x) -- 関数ではないが, ceil(x)として機能する
-max(x, y) -- x/yの最大値
-mid(x, y, z) -- x/y/zの中央の値
-min(x, y) -- x/yの最小値
-rnd(x) -- 0 &lt;= n &lt; xの乱数
-sgn(x) -- 引数の符号を-1か1で返す. sgn(0) = 1
+-flr(-x) -- 関数ではないが, 切り上げとして使える
+max(x, y) -- x,yの最大値
+mid(x, y, z) -- x,y,zの中間の値
+min(x, y) -- x,yの最小値
+rnd(x) -- 0以上x未満の乱数
+sgn(x) -- 引数の符号を-1か1で返す. sgn(0)の時は1になる
 shl(x, y) -- 左シフト
 shr(x, y) -- 右シフト
-sin(x) -- xの正弦, [0..1], 正負は反転している
+sin(x) -- xの正弦, 1周期は0から1の範囲, 正負は反転している
 sqrt(x) -- xの平方根
 srand(x) -- 乱数のシードを設定する</code></pre>
           <!--<pre><code class="lua">- operators
@@ -335,12 +335,12 @@ sub(str, from, [to]) -- 部分文字列</code></pre>
         <!-- TABLES -->
         <div role="tabpanel" class="tab-pane fade" id="tables">
           <pre><code class="lua">-- テーブル
-add(t, v) -- テーブルtに値vを追加する
-all(t) -- 'for v in all(t)'ループで使用する
+add(t, v) -- 値vを追加する
+all(t) -- ループ処理'for v in all(t)'で使用する
 count(t) -- テーブルの要素数を返す
-del(t, v) -- テーブルtの値がvの最初の要素を削除する
-foreach(t, f) -- テーブルtの各要素についてf()を呼ぶ
-pairs(t) -- 'for k,v in pairs(t)'で使用する</code></pre>
+del(t, v) -- 値がvの最初の要素を削除する
+foreach(t, f) -- 各要素について関数fを呼ぶ
+pairs(t) -- ループ処理'for k,v in pairs(t)'で使用する</code></pre>
           <pre><code class="lua">-- メタテーブル
 setmetatable(t, mt) -- テーブルtにメタテーブルmtをセットする</code></pre>
           <p><center><a href="http://www.lexaloffle.com/bbs/?tid=3342" target="_blank" style="color: white;">view metatables thread</a></center></p>
