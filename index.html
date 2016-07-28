@@ -61,7 +61,7 @@
       <ul class="nav nav-pills">
         <!-- class="active" in li -->
         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><img src="img/icon.png" height="12em" alt="Welcome"></a></li>
-        <li role="presentation"><a href="#audio" aria-controls="audio" role="tab" data-toggle="tab">サウンド</a></li>
+        <li role="presentation"><a href="#audio" aria-controls="audio" role="tab" data-toggle="tab">オーディオ</a></li>
         <li role="presentation"><a href="#cartdata" aria-controls="data" role="tab" data-toggle="tab">データ</a></li>
         <li role="presentation"><a href="#coroutines" aria-controls="coroutines" role="tab" data-toggle="tab">コルーチン</a></li>
         <li role="presentation"><a href="#graphics" aria-controls="graphics" role="tab" data-toggle="tab">描画</a></li>
@@ -84,17 +84,17 @@
 pico-8 [switches] [filename.p8] # コマンドラインからPICO-8を起動する
 
 -run # 起動時にfilename.p8を実行する
--width n # ウィンドウまたは画面の幅を設定する。スケール指定がない場合は幅にスケールを一致させる
--height n # ウィンドウまたは画面の高さを設定する。スケール指定がない場合は高さにスケールを一致させる
--scale n # PICO-8のピクセルのサイズを設定する。"-scale 3"ならピクセルは3x3のサイズで描画される
--windowed n # off(0)ならフルスクリーンモード、on(1)ならウィンドウモードで起動する
+-width n # ウィンドウまたは画面の幅を設定する. スケール指定がない場合は幅にスケールを一致させる
+-height n # ウィンドウまたは画面の高さを設定する. スケール指定がない場合は高さにスケールを一致させる
+-scale n # PICO-8のピクセルのサイズを設定する. "-scale 3"ならピクセルは3x3のサイズで描画される
+-windowed n # off(0)ならフルスクリーンモード, on(1)ならウィンドウモードで起動する
 -sound n # 音量を設定する(0-256)
 -music n # 音量を設定する(0-256)
 -joystick n # ジョイスティックの割り当てをn番のプレイヤーから開始する(0-7)
--aspect n # アスペクト比を設定する。420(デフォルト)は1:1を意味し、560は4:3、525は5:4になる
+-aspect n # アスペクト比を設定する. 420(デフォルト)は1:1を意味し, 560は4:3, 525は5:4になる
 -splore # SPLOREを起動する
 -home path # ユーザーデータの参照位置を指定する
--gif_len n # アニメGIFを録画する最大長さを秒単位で指定する(1-120)</code></pre>
+-gif_len n # アニメGIFの最大録画時間を秒単位で指定する(1-120)</code></pre>
           <pre><code class="markdown"># 仕様
 
 - 表示: 128x128, 固定16色パレット
@@ -110,22 +110,22 @@ pico-8 [switches] [filename.p8] # コマンドラインからPICO-8を起動す�
         <div role="tabpanel" class="tab-pane fade" id="audio">
           <p><center><img src="img/keyboard.png" alt="" class="img-responsive"></center></p>
           <pre><code class="lua">music([n, [fade_len, [channel_mask]]]) -- 音楽を再生する, -1: 再生停止
-sfx(n, [channel, [offset]]) -- SFXを再生する, -1: stop in channel, -2: release loop in channel</code></pre>
+sfx(n, [channel, [offset]]) -- SFXを再生する, -1: 再生を停止, -2: ループ再生を停止</code></pre>
         </div>
 
         <!-- CART DATA -->
         <div role="tabpanel" class="tab-pane fade" id="cartdata">
-          <pre><code class="lua">cartdata(id) -- 名前がidのカートリッジデータを開く(実行時毎に1回だけ!)
-dget(idx) -- 指定番号の値を取得する
-dset(idx, val) -- 指定番号に値を設定する</code></pre>
+          <pre><code class="lua">cartdata(id) -- 名前がidのカートリッジデータを開く(実行時に1回だけ!)
+dget(idx) -- 指定番号のデータの値を取得する
+dset(idx, val) -- 指定番号のデータに値を設定する</code></pre>
         </div>
 
         <!-- COROUTINES -->
         <div role="tabpanel" class="tab-pane fade" id="coroutines">
-          <pre><code class="lua">cocreate(f) -- 関数fを実行するコルーチンを返す
-coresume(c) -- コルーチンcの実行を復帰する
-costatus(c) -- コルーチンcが実行中ならtrueを、それ以外ならfalseを返す
-yield() -- コルーチンの中で使用する。コルーチンの実行を復帰命令が呼ばれるまで停止する</code></pre>
+          <pre><code class="lua">cocreate(f) -- 関数fを実行するコルーチンを作成する
+coresume(c) -- コルーチンcの実行を再開する
+costatus(c) -- コルーチンcが実行中ならtrueを, それ以外ならfalseを返す
+yield() -- コルーチンの中で使用する. コルーチンの実行を再開命令が呼ばれるまで停止する</code></pre>
           <p><center><a href="http://www.lexaloffle.com/bbs/?tid=3458" target="_blank" style="color: white;">view coroutines thread</a></center></p>
         </div>
 
@@ -133,42 +133,42 @@ yield() -- コルーチンの中で使用する。コルーチンの実行を復
         <div role="tabpanel" class="tab-pane fade" id="graphics">
           <p><center><img src="img/colors.png" alt="" class="img-responsive"></center></p>
           <pre><code class="lua">camera([x, y]) -- カメラ位置を設定する
-circ(x, y, r, [col]) -- 円の輪郭線を描画する
+circ(x, y, r, [col]) -- 円を描画する
 circfill(x, y, r, [col]) -- 塗りつぶされた円を描画する
-clip([x, y, w, h]) -- 画面のクリッピング領域を設定する
+clip([x, y, w, h]) -- 描画範囲を設定する
 cls() -- 画面をクリアする
 color(col) -- デフォルトの描画色を設定する
-cursor(x, y) -- カーソルとCR/LFマージンの位置を設定する
+cursor(x, y) -- カーソル位置を設定する
 fget(n, [f]) -- スプライトフラグの値を取得する
-flip() -- バックバッファとスクリーンを入れ替える
+flip() -- バックバッファと画面を切り替える
 fset(n, [f], v) -- スプライトフラグの値を設定する
 line(x0, y0, x1, y1, [col]) -- 直線を描画する
-pal(c0, c1, [p]) -- 色0を色1に置き換える; p = 0 = 描画パレット; p = 1 = 画面パレット
-palt(col, t) -- 指定した色の透明設定をt(ブール値)に設定する)
+pal(c0, c1, [p]) -- 色0を色1に置き換える. p=0: 描画パレット, p=1: 画面パレット
+palt(col, t) -- 指定した色の透過処理をt(ブール値)に設定する
 pget(x, y) -- ピクセルの色を取得する
 print(str, [x, y, [col]]) -- 文字列を出力する
 pset(x, y, [col]) -- ピクセルの色を設定する
-rect(x0, y0, x1, y1, [col]) -- 矩形の輪郭線を描画する
+rect(x0, y0, x1, y1, [col]) -- 矩形を描画する
 rectfill(x0, y0, x1, y1, [col]) -- 塗りつぶされた矩形を描画する
 sget(x, y) -- スプライトシートのピクセルの色を取得する
 spr(n, x, y, [w, h], [flip_x], [flip_y]) -- スプライトを描画する
 sset(x, y, [col]) -- スプライトシートのピクセルの色を設定する
-sspr(sx, sy, sw, sh, dx, dy, [dw, dh], [flip_x], [flip_y]) -- スプライトシートからテクスチャを描画する</code></pre>
+sspr(sx, sy, sw, sh, dx, dy, [dw, dh], [flip_x], [flip_y]) -- スプライトシートから指定範囲を描画する</code></pre>
         </div>
 
         <!-- INPUT -->
         <div role="tabpanel" class="tab-pane fade" id="input">
           <p><center><img src="img/input.png" alt="" class="img-responsive"></center></p>
           <pre><code class="lua">btn([i, [p]]) -- プレイヤーpのボタンiの状態を取得する
-btnp([i, [p]]) -- 前回のフレームで押されていなかった時のみtrueになる。15フレーム押され続けると、4フレーム毎に繰り返す</code></pre>
+btnp([i, [p]]) -- 前回のフレームで押されていなかった時のみtrueになる. 15フレーム押され続けると4フレーム毎に繰り返す</code></pre>
         </div>
 
         <!-- MAP -->
         <div role="tabpanel" class="tab-pane fade" id="map">
-          <pre><code class="lua">map(cel_x, cel_y, sx, sy, cel_w, cel_h, [layer]) -- draw map, layers from flags, sprite 0 is empty
-mapdraw(cel_x, cel_y, sx, sy, cel_w, cel_h, [layer]) -- 'map()'と同じ。マップを描画する
-mget(x, y) -- マップの値を取得する
-mset(x, y, v) -- マップの値を設定する</code></pre>
+          <pre><code class="lua">map(cel_x, cel_y, sx, sy, cel_w, cel_h, [layer]) -- マップを描画する. layer指定時はスプライトフラグと一致した時のみ描画される. スプライト0番は描画されない
+mapdraw(cel_x, cel_y, sx, sy, cel_w, cel_h, [layer]) -- マップを描画する. 'map()'と同じ
+mget(x, y) -- マップのセルの値を取得する
+mset(x, y, v) -- マップのセルの値を設定する</code></pre>
         </div>
 
         <!-- MATH -->
@@ -182,12 +182,12 @@ bor(x, y) -- ビット単位の論理和
 bxor(x, y) -- ビット単位の排他的論理和
 cos(x) -- xの余弦, [0..1]
 flr(x) -- 切り捨て
--flr(-x) -- 関数ではないが、ceil(x)として機能する
+-flr(-x) -- 関数ではないが, ceil(x)として機能する
 max(x, y) -- x/yの最大値
 mid(x, y, z) -- x/y/zの中央の値
 min(x, y) -- x/yの最小値
 rnd(x) -- 0 &lt;= n &lt; xの乱数
-sgn(x) -- 引数の符号を-1か1で返す。sgn(0) = 1
+sgn(x) -- 引数の符号を-1か1で返す. sgn(0) = 1
 shl(x, y) -- 左シフト
 shr(x, y) -- 右シフト
 sin(x) -- xの正弦, [0..1], 正負は反転している
@@ -302,14 +302,14 @@ export(filename.wav) -- 現在のSFX/音楽を書き出す
 export(filename%d.wav) -- すべてのSFXを通し番号つきのファイルとして書き出す
 folder() -- ホストOSでカートリッジフォルダーを開く
 help() -- システムコマンドの要約を表示する
-import(filename.png) -- スプライトシートを読み込む。128x128のpngで色がPICO-8のパレットに一致すること前提
+import(filename.png) -- スプライトシートを読み込む. 128x128のpngで色がPICO-8のパレットに一致すること前提
 info() -- カートリッジ情報を表示する
 install_demos() -- install demo p8 carts alongside pico-8 app
 install_games() -- 選抜されたBBSカートリッジをインストールする
 keyconfig() -- プレイヤーボタンのキーボード設定
 load(filename) -- カートリッジを
 ls() -- 現在のディレクトリの要素一覧を表示する
-menuitem(index, [label, callback]) -- ポーズメニューに要素(1-5)を追加する。ラベルとコールバックが指定されないと要素を削除する
+menuitem(index, [label, callback]) -- ポーズメニューに要素(1-5)を追加する. ラベルとコールバックが指定されないと要素を削除する
 mkdir(dirname) -- ディレクトリを作成する
 printh(str) -- 文字列をホストOSのターミナルに出力する
 reboot() -- PICO-8を再起動する
@@ -318,7 +318,7 @@ run() -- カートリッジを実行する
 save(filename) -- カートリッジを保存する
 shutdown() -- close pico-8 app
 splore() -- カートリッジを閲覧する
-stat(x) -- 0でメモリ状態を、1でCPI状態を出力する
+stat(x) -- 0でメモリ状態を, 1でCPI状態を出力する
 time() -- 最後に起動してからの経過秒を返す
 type(v) -- vの型(数値, 文字列, テーブル)を返す</code></pre>
           <pre><code class="javascript">// javascript
