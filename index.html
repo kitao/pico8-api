@@ -54,7 +54,7 @@
     <div id="content" class="container">
       <!-- HEADER -->
       <div class="page-header">
-        <h1>pico-8 api cheatsheet 日本語版</h1>
+        <h1 style="display:inline">pico-8 api cheatsheet 日本語版</h1> <a href="https://github.com/kitao/pico8-api-jp">[ GitHub プロジェクトページ ]</a>
       </div>
 
       <!-- NAVBAR -->
@@ -126,7 +126,7 @@ dset(idx, val) -- 指定番号のデータに値を設定する</code></pre>
 coresume(c) -- コルーチンcの実行を再開する
 costatus(c) -- コルーチンcが実行中ならtrueを, それ以外ならfalseを返す
 yield() -- コルーチンの中で使用する. コルーチンの実行を再開命令が呼ばれるまで停止する</code></pre>
-          <p><center><a href="http://www.lexaloffle.com/bbs/?tid=3458" target="_blank" style="color: white;">view coroutines thread</a></center></p>
+          <p><center><a href="http://www.lexaloffle.com/bbs/?tid=3458" target="_blank" style="color: white;">コルーチン解説ページを読む</a></center></p>
         </div>
 
         <!-- GRAPHICS -->
@@ -237,12 +237,12 @@ end</code></pre>-->
 
         <!-- MEMORY -->
         <div role="tabpanel" class="tab-pane fade" id="memory">
-          <pre><code class="lua">cstore(dest_addr, src_addr, len, [filename]) -- RAMからROMにバイト列をコピーする [load from filename]
+          <pre><code class="lua">cstore(dest_addr, src_addr, len, [filename]) -- RAMまたは指定されたファイルからROMにバイト列をコピーする
 memcpy(dest_addr, src_addr, len) -- バイト列をコピーする
 memset(dest_addr, val, len) -- lenバイトにvalを設定する
 peek(addr) -- RAMの指定アドレスのバイトを取得する
 poke(addr, val) -- RAMの指定アドレスにvalを書き込む
-reload(dest_addr, src_addr, len, [filename]) -- ROMからRAMにバイト列をコピーする [load from filename]</code></pre>
+reload(dest_addr, src_addr, len, [filename]) -- ROMまたは指定されたファイルからRAMにバイト列をコピーする</code></pre>
           <pre><code class="markdown"># 種類:
 
 1. ベースRAM (32kB)
@@ -270,7 +270,7 @@ reload(dest_addr, src_addr, len, [filename]) -- ROMからRAMにバイト列を�
 poke(0x5f2d, 1) -- マウスリスナーを初期化する
 stat(32) -- x座標を取得する
 stat(33) -- y座標を取得する
-stat(34) -- ボタンのビットマスクを取得する (1 = primary, 2 = secondary, 4 = middle)</code></pre>
+stat(34) -- ボタン状態をビット列で取得する (1 = 左ボタン, 2 = 右ボタン, 4 = 中央ボタン)</code></pre>
           <pre><code class="lua">-- 拡張グラフィックスモード
 poke(0x5f2c, 0) -- 標準, 128x128
 poke(0x5f2c, 1) -- 水平方向に引き伸ばし, 64x128
@@ -287,11 +287,11 @@ poke(0x5f2c, 7) -- 左上4分の1の鏡像</code></pre>
           <pre><code class="lua">-- 実行制御
 _update() -- 30fpsの更新タイミング毎に呼ばれる
 _update60() -- 60fpsの更新タイミング毎に呼ばれる
-_draw() -- フレーム描画タイミング毎に呼ばれる
+_draw() -- 画面の描画タイミング毎に呼ばれる
 _init() -- プログラム開始時に一度だけ呼ばれる
 holdframe() -- _draw(), _update()が自動で使用する</code></pre>
           <pre><code class="lua">-- コマンドライン
-assert(condition) -- そのconditionがtrueか確認する
+assert(condition) -- conditionがtrueか確認する
 cd .. -- 親ディレクトリに移動する
 cd [dirname] -- 現在のディレクトリを変更する
 dir() -- 現在のディレクトリの要素一覧を表示する
@@ -302,12 +302,12 @@ export(filename.wav) -- 現在のSFX/音楽を書き出す
 export(filename%d.wav) -- すべてのSFXを通し番号つきのファイルとして書き出す
 folder() -- ホストOSでカートリッジフォルダーを開く
 help() -- システムコマンドの要約を表示する
-import(filename.png) -- スプライトシートを読み込む. 128x128のpngで色がPICO-8のパレットに一致すること前提
+import(filename.png) -- スプライトシートを読み込む. 128x128のpngで色がPICO-8のパレットに一致することが前提
 info() -- カートリッジ情報を表示する
-install_demos() -- install demo p8 carts alongside pico-8 app
-install_games() -- 選抜されたBBSカートリッジをインストールする
-keyconfig() -- プレイヤーボタンのキーボード設定
-load(filename) -- カートリッジを
+install_demos() -- デモカートリッジをインストールする
+install_games() -- 代表的なBBSカートリッジをインストールする
+keyconfig() -- プレイヤーボタンのキーボード割り当てを設定する
+load(filename) -- カートリッジを読み込む
 ls() -- 現在のディレクトリの要素一覧を表示する
 menuitem(index, [label, callback]) -- ポーズメニューに要素(1-5)を追加する. ラベルとコールバックが指定されないと要素を削除する
 mkdir(dirname) -- ディレクトリを作成する
@@ -316,9 +316,9 @@ reboot() -- PICO-8を再起動する
 resume() -- カートリッジの実行を再開する
 run() -- カートリッジを実行する
 save(filename) -- カートリッジを保存する
-shutdown() -- close pico-8 app
+shutdown() -- PICO-8アプリを終了する
 splore() -- カートリッジを閲覧する
-stat(x) -- 0でメモリ状態を, 1でCPI状態を出力する
+stat(x) -- 0でメモリ状態, 1でCPU状態を出力する
 time() -- 最後に起動してからの経過秒を返す
 type(v) -- vの型(数値, 文字列, テーブル)を返す</code></pre>
           <pre><code class="javascript">// javascript
@@ -343,7 +343,7 @@ foreach(t, f) -- 各要素について関数fを呼ぶ
 pairs(t) -- ループ処理'for k,v in pairs(t)'で使用する</code></pre>
           <pre><code class="lua">-- メタテーブル
 setmetatable(t, mt) -- テーブルtにメタテーブルmtをセットする</code></pre>
-          <p><center><a href="http://www.lexaloffle.com/bbs/?tid=3342" target="_blank" style="color: white;">view metatables thread</a></center></p>
+          <p><center><a href="http://www.lexaloffle.com/bbs/?tid=3342" target="_blank" style="color: white;">メタテーブル解説ページを読む</a></center></p>
         </div>
 
         <!-- KEYS -->
@@ -400,7 +400,7 @@ setmetatable(t, mt) -- テーブルtにメタテーブルmtをセットする</c
             <div class="col-md-3">
               <h6>スプライト / マップ エディター</h6>
               <ul>
-                <li><strong>アンドゥ</strong>: ctrl + z</li>
+                <li><strong>取り消し</strong>: ctrl + z</li>
                 <li><strong>コピー</strong>: ctrl + c</li>
                 <li><strong>ペースト</strong>: ctrl + v</li>
                 <li><strong>パン</strong>: space / mmb</li>
@@ -417,19 +417,19 @@ setmetatable(t, mt) -- テーブルtにメタテーブルmtをセットする</c
                   <strong>ドローツール</strong>:
                   <ul>
                     <li><strong>色置き換え</strong>: lctrl</li>
-                    <li><strong>スポイトツール</strong>: rmb</li>
+                    <li><strong>色取得</strong>: rmb</li>
                   </ul>
                 </li>
                 <li>
                   <strong>スタンプツール</strong>:
                   <ul>
-                    <li><strong>透明つきスタンプ</strong>: lctrl</li>
+                    <li><strong>透過ありスタンプ</strong>: lctrl</li>
                   </ul>
                 </li>
                 <li>
                   <strong>選択ツール</strong>:
                   <ul>
-                    <li><strong>スプライト選択</strong>: shift + drag</li>
+                    <li><strong>複数スプライト選択</strong>: shift + drag</li>
                   </ul>
                 </li>
               </ul>
@@ -446,9 +446,9 @@ setmetatable(t, mt) -- テーブルtにメタテーブルmtをセットする</c
                 <li><strong>速度変更</strong>: &lt; / &gt;</li>
                 <li><strong>移動</strong>: home, end, pageup/down, mousewheel</li>
                 <li><strong>パターン切り替え</strong>: + / -</li>
-                <li><strong>スケール自動調整</strong>: ctrl</li>
+                <li><strong>Cmペンタトニック自動調整</strong>: ctrl</li>
                 <li><strong>速度4倍</strong>: shift</li>
-                <li><strong>ループ再生終了</strong>: a</li>
+                <li><strong>ループ再生停止</strong>: a</li>
                 <li><strong>削除</strong>: backspace</li>
                 <li>
                   <strong>エフェクト</strong>:
