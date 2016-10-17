@@ -79,28 +79,33 @@
       <div class="tab-content clearfix">
         <!-- HOME -->
         <div role="tabpanel" class="tab-pane active" id="home">
-          <pre><code class="bash"># version 0.1.8
+          <pre><code class="bash"># version 0.1.9b
 
-pico-8 [switches] [filename.p8] # コマンドラインからPICO-8を起動する
+pico-8 [オプション] [ファイル名.p8] # コマンドラインからPICO-8を起動する
 
--run # 起動時にfilename.p8を実行する
--width n # ウィンドウまたは画面の幅を設定する. スケール指定がない場合は幅にスケールを一致させる
--height n # ウィンドウまたは画面の高さを設定する. スケール指定がない場合は高さにスケールを一致させる
--scale n # PICO-8のピクセルのサイズを設定する. "-scale 3"ならピクセルは3x3のサイズで描画される
--windowed n # off(0)ならフルスクリーンモード, on(1)ならウィンドウモードで起動する
--sound n # 音量を設定する(0-256)
--music n # 音量を設定する(0-256)
--joystick n # ジョイスティックの割り当てをn番のプレイヤーから開始する(0-7)
--aspect n # アスペクト比を設定する. 420(デフォルト)は1:1を意味し, 560は4:3, 525は5:4になる
--splore # SPLOREを起動する
--home path # ユーザーデータの参照位置を指定する
--gif_len n # アニメGIFの最大録画時間を秒単位で指定する(1-120)</code></pre>
+-width n # ウィンドウの幅を指定する
+-height n # ウィンドウの高さを指定する
+-windowed n # 0なら全画面モードで, 1ならウィンドウモードで起動する
+-sound n # 音量を指定する (0-256)
+-music n # 音量を指定する (0-256)
+-joystick n # ジョイスティックの割り当てをプレイヤー番号nから開始する(0-7)
+-pixel_perfect n # 1ならフィルターなしの整数倍の拡大を行う (デフォルトは1)
+-draw_rect x,y,w,h # PICO-8の画面を描画するウィンドウの座標とサイズを指定する
+-run filename # 起動時にfilename.p8を読み込み開始する
+-splore # SPLOREモードで起動する
+-home path # config.txtやユーザーデータの参照フォルダを指定する
+-desktop path # スクリーンショットとアニメGIFの保存フォルダを指定する
+-screenshot_scale n # スクリーンショットの拡大率を指定する (デフォルトは3の368x368ピクセル)
+-gif_scale n # アニメGIFの拡大率を指定する (デフォルトは2の256x256ピクセル)
+-gif_len n # アニメGIFの最大録画時間を秒単位で指定する (1-120)
+-gui_theme n # 1で高コントラストのエディターカラー設定を使用する
+-timeout n # ダウンロード開始を待つ最大時間を秒単位で指定する (デフォルトは30)</code></pre>
           <pre><code class="markdown"># 仕様
 
-- 表示: 128x128, 固定16色パレット
+- 表示: 128x128, 16色固定パレット
 - 入力: 6ボタン
 - カートリッジサイズ: 32k
-- サウンド: 4チャンネル, 定義可能な64サウンド
+- サウンド: 4チャンネル, 64サウンド
 - コード: Lua, 最大8192トークン
 - スプライト: シングルバンク 128 8x8スプライト + マップと共有の128スプライト
 - マップ: 128x32 8ビットセル + スプライトと共有の128x32セル</code></pre>
@@ -260,7 +265,7 @@ reload(dest_addr, src_addr, len, [filename]) -- ROMまたは指定されたフ�
 0x5e00 - 永続カートリッジデータ (256バイト)
 0x5f00 - 描画ステート
 0x5f40 - ハードウェア状態
-0x5f80 - GPIOピン (128バイト) // 開発中
+0x5f80 - GPIOピン (128バイト)
 0x6000 - 画面 (8k)</code></pre>
         </div>
 
@@ -307,18 +312,18 @@ info() -- カートリッジ情報を表示する
 install_demos() -- デモカートリッジをインストールする
 install_games() -- 代表的なBBSカートリッジをインストールする
 keyconfig() -- プレイヤーボタンのキーボード割り当てを設定する
-load(filename) -- カートリッジを読み込む
+load(filename) -- カートリッジを読み込む. "@clip"でホストOSのクリップボードから読み込む
 ls() -- 現在のディレクトリの要素一覧を表示する
 menuitem(index, [label, callback]) -- ポーズメニューに要素(1-5)を追加する. ラベルとコールバックが指定されないと要素を削除する
 mkdir(dirname) -- ディレクトリを作成する
-printh(str) -- 文字列をホストOSのターミナルに出力する
+printh(str, [filename, overwrite]) -- 文字列をホストOSのターミナルに出力する. filenameを指定するとホストOSのファイルに追記する("@clip"を指定するとホストOSのクリップボードに書き込む). overwriteをtrueにすると追記ではなく上書きする.
 reboot() -- PICO-8を再起動する
 resume() -- カートリッジの実行を再開する
 run() -- カートリッジを実行する
-save(filename) -- カートリッジを保存する
+save(filename) -- カートリッジを保存する. "@clip"でホストOSのクリップボードに保存する
 shutdown() -- PICO-8アプリを終了する
 splore() -- カートリッジを閲覧する
-stat(x) -- 0でメモリ状態, 1でCPU状態を出力する
+stat(x) -- 0でメモリ状態, 1でCPU状態, 4でクリップボードの内容(ctrl-vを押した後に有効), 16-19でチャンネル0-3で再生中のSFX番号, 20-23でチャンネル0-3で再生中のノート番号(0-31)を出力する
 time() -- 最後に起動してからの経過秒を返す
 type(v) -- vの型(数値, 文字列, テーブル)を返す</code></pre>
           <pre><code class="javascript">// javascript
@@ -357,17 +362,20 @@ setmetatable(t, mt) -- テーブルtにメタテーブルmtをセットする</c
                 <li><strong>終了</strong>: alt + f4 / cmd + q</li>
                 <li><strong>再読み込み＆実行</strong>: ctrl + r</li>
                 <li><strong>保存</strong>: ctrl + s</li>
-                <li><strong>スクリーンショット</strong>: f6 / f1</li>
-                <li><strong>カートリッジ画像保存</strong>: f7 / f2</li>
-                <li><strong>録画開始</strong>: f8 / f3</li>
-                <li><strong>動画保存</strong>: f9 / f4</li>
-                <li><strong>キーボードカーソル</strong>: f10</li>
+                <li><strong>消音切り替え</strong>: ctrl + m</li>
+                <li><strong>スクリーンショット</strong>: f6 / f1 / ctrl + 6</li>
+                <li><strong>カートリッジ画像保存</strong>: f7 / f2 / ctrl + 7</li>
+                <li><strong>録画開始</strong>: f8 / f3 / ctrl + 8</li>
+                <li><strong>動画保存</strong>: f9 / f4 / ctrl + 9</li>
+                <li><strong>キーボードカーソル</strong>: f10 / f5 / ctrl + 0</li>
                 <li><strong>編集モード切り替え</strong>: alt + right, left</li>
                 <li><strong>コマンドライン補完</strong>: tab</li>
               </ul>
               <h6>実行中</h6>
               <ul>
                 <li><strong>ポーズメニュー</strong>: p / enter</li>
+                <li><strong>1P操作</strong>: cursors + zx / nm / cv</li>
+                <li><strong>2P操作</strong>: sdfe + tab, q / shift + a</li>
               </ul>
             </div>
 
@@ -384,8 +392,10 @@ setmetatable(t, mt) -- テーブルtにメタテーブルmtをセットする</c
                 <li><strong>行コピー</strong>: ctrl + d</li>
                 <li><strong>検索</strong>: ctrl + f</li>
                 <li><strong>検索繰り返し</strong>: ctrl + g</li>
+                <li><strong>先頭/終端ジャンプ</strong>: ctrl + up, down</li>
                 <li><strong>関数ジャンプ</strong>: alt + up, down</li>
-                <li><strong>ボタン絵文字</strong>: shift + l, r, u, d, x, o</li>
+                <li><strong>グリフ入力</strong>: shift + a..z</li>
+                <li><strong>グリフモード切り替え</strong>: ctrl + k</li>
               </ul>
               <h6>SPLORE</h6>
               <ul>
