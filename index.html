@@ -85,21 +85,21 @@ pico-8 [オプション] [ファイル名.p8] # コマンドラインからPICO-
 
 -width n # ウィンドウの幅を指定する
 -height n # ウィンドウの高さを指定する
--windowed n # 0なら全画面モードで, 1ならウィンドウモードで起動する
--sound n # 音量を指定する (0-256)
--music n # 音量を指定する (0-256)
+-windowed n # 0なら全画面モード, 1ならウィンドウモードで起動する
+-sound n # 音量を指定する(0-256)
+-music n # 音量を指定する(0-256)
 -joystick n # ジョイスティックの割り当てをプレイヤー番号nから開始する(0-7)
--pixel_perfect n # 1ならフィルターなしの整数倍の拡大を行う (デフォルトは1)
+-pixel_perfect n # 1ならフィルターなしの整数倍の拡大を行う(デフォルトは1)
 -draw_rect x,y,w,h # PICO-8の画面を描画するウィンドウの座標とサイズを指定する
--run filename # 起動時にfilename.p8を読み込み開始する
--splore # SPLOREモードで起動する
+-run filename # 起動時にfilename.p8を読み込み実行する
+-splore # 起動時にSPLOREを実行する
 -home path # config.txtやユーザーデータの参照フォルダを指定する
 -desktop path # スクリーンショットとアニメGIFの保存フォルダを指定する
--screenshot_scale n # スクリーンショットの拡大率を指定する (デフォルトは3の368x368ピクセル)
--gif_scale n # アニメGIFの拡大率を指定する (デフォルトは2の256x256ピクセル)
--gif_len n # アニメGIFの最大録画時間を秒単位で指定する (1-120)
+-screenshot_scale n # スクリーンショットの拡大率を指定する(デフォルトは3の368x368ピクセル)
+-gif_scale n # アニメGIFの拡大率を指定する(デフォルトは2の256x256ピクセル)
+-gif_len n # アニメGIFの最大録画時間を秒単位で指定する(1-120)
 -gui_theme n # 1で高コントラストのエディターカラー設定を使用する
--timeout n # ダウンロード開始を待つ最大時間を秒単位で指定する (デフォルトは30)</code></pre>
+-timeout n # ダウンロード開始を待つ最大時間を秒単位で指定する(デフォルトは30)</code></pre>
           <pre><code class="markdown"># 仕様
 
 - 表示: 128x128, 16色固定パレット
@@ -114,8 +114,8 @@ pico-8 [オプション] [ファイル名.p8] # コマンドラインからPICO-
         <!-- AUDIO -->
         <div role="tabpanel" class="tab-pane fade" id="audio">
           <p><center><img src="img/keyboard.png" alt="" class="img-responsive"></center></p>
-          <pre><code class="lua">music([n, [fade_len, [channel_mask]]]) -- 音楽を再生する, -1: 再生停止
-sfx(n, [channel, [offset]]) -- SFXを再生する, -1: 再生を停止, -2: ループ再生を停止</code></pre>
+          <pre><code class="lua">music([n, [fade_len, [channel_mask]]]) -- 音楽を再生する. -1: 再生停止
+sfx(n, [channel, [offset]]) -- SFXを再生する. -1: 再生停止, -2: ループ再生解除</code></pre>
         </div>
 
         <!-- CART DATA -->
@@ -250,23 +250,23 @@ poke(addr, val) -- RAMの指定アドレスにvalを書き込む
 reload(dest_addr, src_addr, len, [filename]) -- ROMまたは指定されたファイルからRAMにバイト列をコピーする</code></pre>
           <pre><code class="markdown"># 種類:
 
-1. ベースRAM (32kB)
+1. ベースRAM(32kB)
 2. カートリッジROM
-3. Lua RAM (1MB)</code></pre>
+3. Lua RAM(1MB)</code></pre>
           <pre><code class="markdown"># RAM配置:
 
 0x0    - グラフィックス
-0x1000 - グラフィックス2/マップ2 (共有)
+0x1000 - グラフィックス2/マップ2(共有)
 0x2000 - マップ
 0x3000 - グラフィックス属性
 0x3100 - 音楽
 0x3200 - SFX
 0x4300 - ユーザーデータ
-0x5e00 - 永続カートリッジデータ (256バイト)
-0x5f00 - 描画ステート
+0x5e00 - 永続カートリッジデータ(256byte)
+0x5f00 - 描画状態
 0x5f40 - ハードウェア状態
-0x5f80 - GPIOピン (128バイト)
-0x6000 - 画面 (8k)</code></pre>
+0x5f80 - GPIOピン(128byte)
+0x6000 - 画面(8kB)</code></pre>
         </div>
 
         <!-- PEEK / POKE -->
@@ -275,7 +275,10 @@ reload(dest_addr, src_addr, len, [filename]) -- ROMまたは指定されたフ�
 poke(0x5f2d, 1) -- マウスリスナーを初期化する
 stat(32) -- x座標を取得する
 stat(33) -- y座標を取得する
-stat(34) -- ボタン状態をビット列で取得する (1 = 左ボタン, 2 = 右ボタン, 4 = 中央ボタン)</code></pre>
+stat(34) -- ボタン状態をビット列で取得する(1=左ボタン, 2=右ボタン, 4=中央ボタン)</code></pre>
+          <pre><code class="lua">-- サウンド
+stat(16-19) -- チャンネル0-3で再生中のSFX番号を取得する
+stat(20-23) -- チャンネル0-3で再生中のノート番号(0-31)を取得する</code></pre>
           <pre><code class="lua">-- 拡張グラフィックスモード
 poke(0x5f2c, 0) -- 標準, 128x128
 poke(0x5f2c, 1) -- 水平方向に引き伸ばし, 64x128
@@ -312,18 +315,18 @@ info() -- カートリッジ情報を表示する
 install_demos() -- デモカートリッジをインストールする
 install_games() -- 代表的なBBSカートリッジをインストールする
 keyconfig() -- プレイヤーボタンのキーボード割り当てを設定する
-load(filename) -- カートリッジを読み込む. "@clip"でホストOSのクリップボードから読み込む
+load(filename) -- カートリッジを読み込む. "@clip"を指定するとクリップボードから読み込む
 ls() -- 現在のディレクトリの要素一覧を表示する
 menuitem(index, [label, callback]) -- ポーズメニューに要素(1-5)を追加する. ラベルとコールバックが指定されないと要素を削除する
 mkdir(dirname) -- ディレクトリを作成する
-printh(str, [filename, overwrite]) -- 文字列をホストOSのターミナルに出力する. filenameを指定するとホストOSのファイルに追記する("@clip"を指定するとホストOSのクリップボードに書き込む). overwriteをtrueにすると追記ではなく上書きする.
+printh(str, [filename, overwrite]) -- 文字列をホストOSのターミナル(または指定したファイル)に出力する. "@clip"を指定するとクリップボードに書き込む
 reboot() -- PICO-8を再起動する
 resume() -- カートリッジの実行を再開する
 run() -- カートリッジを実行する
-save(filename) -- カートリッジを保存する. "@clip"でホストOSのクリップボードに保存する
+save(filename) -- カートリッジを保存する. "@clip"を指定するとクリップボードに保存する
 shutdown() -- PICO-8アプリを終了する
 splore() -- カートリッジを閲覧する
-stat(x) -- 0でメモリ状態, 1でCPU状態, 4でクリップボードの内容(ctrl-vを押した後に有効), 16-19でチャンネル0-3で再生中のSFX番号, 20-23でチャンネル0-3で再生中のノート番号(0-31)を出力する
+stat(x) -- 0でメモリ状態, 1でCPU状態, 4でクリップボードの内容(ユーザーがctrl-vを押した後に有効!)を出力する
 time() -- 最後に起動してからの経過秒を返す
 type(v) -- vの型(数値, 文字列, テーブル)を返す</code></pre>
           <pre><code class="javascript">// javascript
@@ -358,13 +361,13 @@ setmetatable(t, mt) -- テーブルtにメタテーブルmtをセットする</c
             <div class="col-md-3">
               <h6>共通</h6>
               <ul>
-                <li><strong>フルスクリーン</strong>: alt + enter / cmd + f</li>
+                <li><strong>全画面表示</strong>: alt + enter / cmd + f</li>
                 <li><strong>終了</strong>: alt + f4 / cmd + q</li>
                 <li><strong>再読み込み＆実行</strong>: ctrl + r</li>
                 <li><strong>保存</strong>: ctrl + s</li>
-                <li><strong>消音切り替え</strong>: ctrl + m</li>
+                <li><strong>消音</strong>: ctrl + m</li>
                 <li><strong>スクリーンショット</strong>: f6 / f1 / ctrl + 6</li>
-                <li><strong>カートリッジ画像保存</strong>: f7 / f2 / ctrl + 7</li>
+                <li><strong>ラベル画像保存</strong>: f7 / f2 / ctrl + 7</li>
                 <li><strong>録画開始</strong>: f8 / f3 / ctrl + 8</li>
                 <li><strong>動画保存</strong>: f9 / f4 / ctrl + 9</li>
                 <li><strong>キーボードカーソル</strong>: f10 / f5 / ctrl + 0</li>
@@ -392,10 +395,10 @@ setmetatable(t, mt) -- テーブルtにメタテーブルmtをセットする</c
                 <li><strong>行コピー</strong>: ctrl + d</li>
                 <li><strong>検索</strong>: ctrl + f</li>
                 <li><strong>検索繰り返し</strong>: ctrl + g</li>
-                <li><strong>先頭/終端ジャンプ</strong>: ctrl + up, down</li>
+                <li><strong>先頭 / 終端</strong>: ctrl + up, down</li>
                 <li><strong>関数ジャンプ</strong>: alt + up, down</li>
                 <li><strong>グリフ入力</strong>: shift + a..z</li>
-                <li><strong>グリフモード切り替え</strong>: ctrl + k</li>
+                <li><strong>グリフモード</strong>: ctrl + k</li>
               </ul>
               <h6>SPLORE</h6>
               <ul>
@@ -413,7 +416,7 @@ setmetatable(t, mt) -- テーブルtにメタテーブルmtをセットする</c
                 <li><strong>取り消し</strong>: ctrl + z</li>
                 <li><strong>コピー</strong>: ctrl + c</li>
                 <li><strong>ペースト</strong>: ctrl + v</li>
-                <li><strong>パン</strong>: space / mmb</li>
+                <li><strong>表示範囲移動</strong>: space / mmb</li>
                 <li><strong>スプライト切り替え</strong>: q / w</li>
                 <li><strong>色切り替え</strong>: 1 / 2</li>
                 <li><strong>タブ切り替え</strong>: + / -</li>
@@ -458,7 +461,7 @@ setmetatable(t, mt) -- テーブルtにメタテーブルmtをセットする</c
                 <li><strong>パターン切り替え</strong>: + / -</li>
                 <li><strong>Cmペンタトニック自動調整</strong>: ctrl</li>
                 <li><strong>速度4倍</strong>: shift</li>
-                <li><strong>ループ再生停止</strong>: a</li>
+                <li><strong>ループ再生解除</strong>: a</li>
                 <li><strong>削除</strong>: backspace</li>
                 <li>
                   <strong>エフェクト</strong>:
@@ -466,11 +469,11 @@ setmetatable(t, mt) -- テーブルtにメタテーブルmtをセットする</c
                     <li><strong>0</strong>: なし</li>
                     <li><strong>1</strong>: スライド</li>
                     <li><strong>2</strong>: ビブラート</li>
-                    <li><strong>3</strong>: ドロップ (ドラムキック!)</li>
+                    <li><strong>3</strong>: ドロップ(ドラムキック!)</li>
                     <li><strong>4</strong>: フェードイン</li>
                     <li><strong>5</strong>: フェードアウト</li>
-                    <li><strong>6</strong>: 高速アルペジオ (4ノート)</li>
-                    <li><strong>7</strong>: 低速アルペジオ (4ノート)</li>
+                    <li><strong>6</strong>: 高速アルペジオ(4ノート)</li>
+                    <li><strong>7</strong>: 低速アルペジオ(4ノート)</li>
                   </ul>
                 </li>
               </ul>
