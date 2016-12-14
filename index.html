@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" media="screen" title="bootstrap" charset="utf-8">
     <link rel="stylesheet" href="css/highlight/monokai.css">
     <style type="text/css">
+      body {
+        background-image: url("img/bg.png");
+        background-repeat: repeat;
+      }
       .nav-pills > li > a {
         border-radius: 4px 4px 0 0;
       }
@@ -20,7 +24,19 @@
         padding-left: 1.7rem;
         padding-bottom: 1.7rem;
       }
+      .api {
+        background-color: #fff;
+        border-radius: 5px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      .footer {
+        background-color: #fff;
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
     </style>
+    <script src="https://use.fontawesome.com/1452dd4c19.js"></script>
   </head>
   <body>
 
@@ -46,15 +62,12 @@
       0x0F. KEYS
         0x00. KEYS_0
         0x01. KEYS_1
-        0x02. KEYS_2
-        0x03. KEYS_3
-
     -->
 
-    <div id="content" class="container">
+    <div id="content" class="container api">
       <!-- HEADER -->
       <div class="page-header">
-        <h1 style="display:inline">PICO-8 API 早見表</h1> <a href="https://github.com/kitao/pico8-api-jp">[ GitHub プロジェクトページ ]</a>
+        <h1 style="display:inline">PICO-8 API 早見表</h1>
       </div>
 
       <!-- NAVBAR -->
@@ -64,7 +77,7 @@
         <li role="presentation"><a href="#audio" aria-controls="audio" role="tab" data-toggle="tab">オーディオ</a></li>
         <li role="presentation"><a href="#cartdata" aria-controls="data" role="tab" data-toggle="tab">データ</a></li>
         <li role="presentation"><a href="#coroutines" aria-controls="coroutines" role="tab" data-toggle="tab">コルーチン</a></li>
-        <li role="presentation"><a href="#graphics" aria-controls="graphics" role="tab" data-toggle="tab">描画</a></li>
+        <li role="presentation"><a href="#graphics" aria-controls="graphics" role="tab" data-toggle="tab">グラフィックス</a></li>
         <li role="presentation"><a href="#input" aria-controls="input" role="tab" data-toggle="tab">入力</a></li>
         <li role="presentation"><a href="#map" aria-controls="map" role="tab" data-toggle="tab">マップ</a></li>
         <li role="presentation"><a href="#math" aria-controls="math" role="tab" data-toggle="tab">数学</a></li>
@@ -79,30 +92,35 @@
       <div class="tab-content clearfix">
         <!-- HOME -->
         <div role="tabpanel" class="tab-pane active" id="home">
-          <pre><code class="bash"># version 0.1.9b
+          <p><center><img src="img/icon.png" alt="" class="img-responsive"></center></p>
+
+          <h6>PICO-8 起動オプション</h6>
+          <pre><code class="bash"># version 0.1.10
 
 pico-8 [オプション] [ファイル名.p8] # コマンドラインからPICO-8を起動する
 
+-run # 起動時にfilename.p8を読み込み実行する
 -width n # ウィンドウの幅を指定する
 -height n # ウィンドウの高さを指定する
--windowed n # 0なら全画面モード, 1ならウィンドウモードで起動する
+-windowed b # 0なら全画面モード, 1ならウィンドウモードで起動する
 -sound n # 音量を指定する(0-256)
 -music n # 音量を指定する(0-256)
 -joystick n # ジョイスティックの割り当てをプレイヤー番号nから開始する(0-7)
--pixel_perfect n # 1ならフィルターなしの整数倍の拡大を行う(デフォルトは1)
+-pixel_perfect b # 1ならフィルターなしの整数倍の拡大を行う(デフォルトは1)
 -draw_rect x,y,w,h # PICO-8の画面を描画するウィンドウの座標とサイズを指定する
--run filename # 起動時にfilename.p8を読み込み実行する
 -splore # 起動時にSPLOREを実行する
 -home path # config.txtやユーザーデータの参照フォルダを指定する
 -desktop path # スクリーンショットとアニメGIFの保存フォルダを指定する
--screenshot_scale n # スクリーンショットの拡大率を指定する(デフォルトは3の368x368ピクセル)
--gif_scale n # アニメGIFの拡大率を指定する(デフォルトは2の256x256ピクセル)
+-screenshot_scale n # スクリーンショットの拡大率を指定する(デフォルトは3)
+-gif_scale n # アニメGIFの拡大率を指定する(デフォルトは2)
 -gif_len n # アニメGIFの最大録画時間を秒単位で指定する(1-120)
--gui_theme n # 1で高コントラストのエディターカラー設定を使用する
--timeout n # ダウンロード開始を待つ最大時間を秒単位で指定する(デフォルトは30)</code></pre>
-          <pre><code class="markdown"># 仕様
+-gui_theme n # コードエディタの色を設定する. 0:クラシック, 1:暗い青
+-timeout n # SPLOREでダウンロード開始を待つ最大時間を秒単位で指定する
+-frameless b # 1なら枠なしのウィンドウにする
+-show_fps b # 1ならFPSを表示する</code></pre>
 
-- 表示: 128x128, 16色固定パレット
+          <h6>PICO-8 仕様</h6>
+          <pre><code class="markdown">- 表示: 128x128, 16色固定パレット
 - 入力: 6ボタン
 - カートリッジサイズ: 32k
 - サウンド: 4チャンネル, 64サウンド
@@ -114,12 +132,15 @@ pico-8 [オプション] [ファイル名.p8] # コマンドラインからPICO-
         <!-- AUDIO -->
         <div role="tabpanel" class="tab-pane fade" id="audio">
           <p><center><img src="img/keyboard.png" alt="" class="img-responsive"></center></p>
+
+          <h6>オーディオ制御</h6>
           <pre><code class="lua">music([n, [fade_len, [channel_mask]]]) -- 音楽を再生する. -1: 再生停止
 sfx(n, [channel, [offset]]) -- SFXを再生する. -1: 再生停止, -2: ループ再生解除</code></pre>
         </div>
 
         <!-- CART DATA -->
         <div role="tabpanel" class="tab-pane fade" id="cartdata">
+          <h6>カートリッジデータ制御</h6>
           <pre><code class="lua">cartdata(id) -- 名前がidのカートリッジデータを開く(実行時に1回だけ!)
 dget(idx) -- 指定番号のデータの値を取得する
 dset(idx, val) -- 指定番号のデータに値を設定する</code></pre>
@@ -127,25 +148,28 @@ dset(idx, val) -- 指定番号のデータに値を設定する</code></pre>
 
         <!-- COROUTINES -->
         <div role="tabpanel" class="tab-pane fade" id="coroutines">
+          <h6>コルーチン :: <u><a href="http://www.lexaloffle.com/bbs/?tid=3458" target="_blank" style="color: white;">コルーチン解説ページを読む</a></u></h6>
           <pre><code class="lua">cocreate(f) -- 関数fを実行するコルーチンを作成する
 coresume(c) -- コルーチンcの実行を再開する
 costatus(c) -- コルーチンcが実行中ならtrueを, それ以外ならfalseを返す
 yield() -- コルーチンの中で使用する. コルーチンの実行を再開命令が呼ばれるまで停止する</code></pre>
-          <p><center><a href="http://www.lexaloffle.com/bbs/?tid=3458" target="_blank" style="color: white;">コルーチン解説ページを読む</a></center></p>
+          <p><center></center></p>
         </div>
 
         <!-- GRAPHICS -->
         <div role="tabpanel" class="tab-pane fade" id="graphics">
-          <p><center><img src="img/colors.png" alt="" class="img-responsive"></center></p>
+          <p><center><img style="border-radius: 5px;" src="img/colors.png" alt="" class="img-responsive"></center></p>
+
+          <h6>グラフィックス制御</h6>
           <pre><code class="lua">camera([x, y]) -- カメラ位置を設定する
 circ(x, y, r, [col]) -- 円を描画する
 circfill(x, y, r, [col]) -- 塗りつぶされた円を描画する
 clip([x, y, w, h]) -- 描画範囲を設定する
-cls() -- 画面をクリアする
+cls([col]) -- 画面をクリアする. col=クリア色
 color(col) -- デフォルトの描画色を設定する
 cursor(x, y) -- カーソル位置を設定する
 fget(n, [f]) -- スプライトフラグの値を取得する
-flip() -- バックバッファと画面を切り替える
+flip() -- バックバッファを画面に表示する(30fps)
 fset(n, [f], v) -- スプライトフラグの値を設定する
 line(x0, y0, x1, y1, [col]) -- 直線を描画する
 pal(c0, c1, [p]) -- 色0を色1に置き換える. p=0: 描画パレット, p=1: 画面パレット
@@ -163,13 +187,16 @@ sspr(sx, sy, sw, sh, dx, dy, [dw, dh], [flip_x], [flip_y]) -- スプライトシ
 
         <!-- INPUT -->
         <div role="tabpanel" class="tab-pane fade" id="input">
-          <p><center><img src="img/input.png" alt="" class="img-responsive"></center></p>
+          <p><center><img style="border-radius: 5px;" src="img/input.png" alt="" class="img-responsive"></center></p>
+
+          <h6>入力制御</h6>
           <pre><code class="lua">btn([i, [p]]) -- プレイヤーpのボタンiの状態を取得する
 btnp([i, [p]]) -- 前回のフレームで押されていなかった時のみtrueになる. 15フレーム押され続けると4フレーム毎に繰り返す</code></pre>
         </div>
 
         <!-- MAP -->
         <div role="tabpanel" class="tab-pane fade" id="map">
+          <h6>マップ制御</h6>
           <pre><code class="lua">map(cel_x, cel_y, sx, sy, cel_w, cel_h, [layer]) -- マップを描画する. layer指定時はスプライトフラグと一致した時のみ描画される. スプライト0番は描画されない
 mapdraw(cel_x, cel_y, sx, sy, cel_w, cel_h, [layer]) -- マップを描画する. 'map()'と同じ
 mget(x, y) -- マップのセルの値を取得する
@@ -178,6 +205,7 @@ mset(x, y, v) -- マップのセルの値を設定する</code></pre>
 
         <!-- MATH -->
         <div role="tabpanel" class="tab-pane fade" id="math">
+          <h6>数学関数</h6>
           <pre><code class="lua">-32768.0 .. 32767.99 -- 値の範囲
 abs(x) -- xの絶対値
 atan2(dx, dy) -- (dx, dy)を0から1の角度に変換する
@@ -198,64 +226,73 @@ shr(x, y) -- 右シフト
 sin(x) -- xの正弦, 1周期は0から1の範囲, 正負は反転している
 sqrt(x) -- xの平方根
 srand(x) -- 乱数のシードを設定する</code></pre>
-          <!--<pre><code class="lua">- operators
-+ - sum
-- - sub
-* - mul
-/ - div
-% - mod
-^ - pow
-+= - sum to
--= - sub to
-*= - mul to
-/= - div to
-%= - mod to
-^= - pow to
-== - compare equals
-~= - compare not equals
-!= - compare not equals
-&gt; - compare greater than
-&lt; - compare less than
-&gt;= - compare greater than or equals
-&lt;= - compare less than or equals
-not - boolean negation
-and - boolean conjunction
-or - boolean disjunction
-() - operation delimiters</code></pre>
-          <pre><code class="lua">- logical blocks
+
+          <h6>演算子</h6>
+          <pre><code class="lua">a = b -- assignment
+a + b -- sum
+a - b -- sub
+a * b -- mul
+a / b -- div
+a % b -- mod
+a ^ b -- pow
+a += b -- sum to
+a -= b -- sub to
+a *= b -- mul to
+a /= b -- div to
+a %= b -- mod to
+a ^= b -- pow to
+a == b -- compare equals
+a ~= b -- compare not equals
+a != b -- compare not equals
+a &gt; b -- compare greater than
+a &lt; b -- compare less than
+a &gt;= b -- compare greater than or equals
+a &lt;= b -- compare less than or equals
+not a -- boolean negation
+a and b -- boolean conjunction
+a or b -- boolean disjunction
+(a) -- operation delimiters</code></pre>
+
+          <h6>flow control</h6>
+          <pre><code class="lua">::label:: -- label
+goto label -- jump
+
+if (&lt;condition&gt;) -- inline if
+
 if &lt;condition&gt; then
- - code block
+ -- if block
 elseif &lt;condition&gt; then
- - code block
+ -- elseif block
 else
- - code block
+ -- else block
 end
 
 while &lt;condition&gt; do
- - code block
+ -- while block
 end
 
 for &lt;var&gt; = &lt;first&gt;, &lt;last&gt;, &lt;step&gt; do
- - code block
-end</code></pre>-->
+ -- for block
+end</code></pre>
         </div>
 
         <!-- MEMORY -->
         <div role="tabpanel" class="tab-pane fade" id="memory">
-          <pre><code class="lua">cstore(dest_addr, src_addr, len, [filename]) -- RAMまたは指定されたファイルからROMにバイト列をコピーする
+          <h6>メモリ操作</h6>
+          <pre><code class="lua">cstore(dest_addr, src_addr, len, [filename]) -- RAMまたは指定されたファイルからROMにバイト列をコピーする. マルチカートリッジ対応
 memcpy(dest_addr, src_addr, len) -- バイト列をコピーする
 memset(dest_addr, val, len) -- lenバイトにvalを設定する
 peek(addr) -- RAMの指定アドレスのバイトを取得する
 poke(addr, val) -- RAMの指定アドレスにvalを書き込む
-reload(dest_addr, src_addr, len, [filename]) -- ROMまたは指定されたファイルからRAMにバイト列をコピーする</code></pre>
-          <pre><code class="markdown"># 種類:
+reload(dest_addr, src_addr, len, [filename]) -- ROMまたは指定されたファイルからRAMにバイト列をコピーする. マルチカートリッジ対応</code></pre>
 
-1. ベースRAM(32kB)
+          <h6>種類</h6>
+          <pre><code class="markdown">1. ベースRAM(32kB)
 2. カートリッジROM
 3. Lua RAM(1MB)</code></pre>
-          <pre><code class="markdown"># RAM配置:
 
-0x0    - グラフィックス
+          <h6>RAM配置</h6>
+          <pre><code class="markdown">0x0    - グラフィックス
 0x1000 - グラフィックス2/マップ2(共有)
 0x2000 - マップ
 0x3000 - グラフィックス属性
@@ -271,16 +308,14 @@ reload(dest_addr, src_addr, len, [filename]) -- ROMまたは指定されたフ�
 
         <!-- PEEK / POKE -->
         <div role="tabpanel" class="tab-pane fade" id="peekpoke">
-          <pre><code class="lua">-- マウス
-poke(0x5f2d, 1) -- マウスリスナーを初期化する
+          <h6>マウス</h6>
+          <pre><code class="lua">poke(0x5f2d, 1) -- マウスリスナーを初期化する
 stat(32) -- x座標を取得する
 stat(33) -- y座標を取得する
 stat(34) -- ボタン状態をビット列で取得する(1=左ボタン, 2=右ボタン, 4=中央ボタン)</code></pre>
-          <pre><code class="lua">-- サウンド
-stat(16-19) -- チャンネル0-3で再生中のSFX番号を取得する
-stat(20-23) -- チャンネル0-3で再生中のノート番号(0-31)を取得する</code></pre>
-          <pre><code class="lua">-- 拡張グラフィックスモード
-poke(0x5f2c, 0) -- 標準, 128x128
+
+          <h6>拡張グラフィックスモード</h6>
+          <pre><code class="lua">poke(0x5f2c, 0) -- standard, 128x128
 poke(0x5f2c, 1) -- 水平方向に引き伸ばし, 64x128
 poke(0x5f2c, 2) -- 垂直方向に引き伸ばし, 128x64
 poke(0x5f2c, 3) -- 拡大, 64x64
@@ -288,26 +323,34 @@ poke(0x5f2c, 4) -- 標準, 128x128
 poke(0x5f2c, 5) -- 左半分の鏡像
 poke(0x5f2c, 6) -- 右半分の鏡像
 poke(0x5f2c, 7) -- 左上4分の1の鏡像</code></pre>
+
+          <h6>raspberry pi / pocketchip gpio</h6>
+          <pre><code class="lua">-- run pico-8 as root ("sudo pico-8")
+-- values in [0..255]
+poke(0x5f80, val) -- send val to gpio0
+poke(0x5f81, val) -- send val to gpio1
+-- et cetera</code></pre>
         </div>
 
         <!-- PICO-8 -->
         <div role="tabpanel" class="tab-pane fade" id="pico8">
-          <pre><code class="lua">-- 実行制御
-_update() -- 30fpsの更新タイミング毎に呼ばれる
-_update60() -- 60fpsの更新タイミング毎に呼ばれる
-_draw() -- 画面の描画タイミング毎に呼ばれる
+          <h6>実行制御</h6>
+          <pre><code class="lua">_draw() -- 画面の描画タイミング毎に呼ばれる
 _init() -- プログラム開始時に一度だけ呼ばれる
-holdframe() -- _draw(), _update()が自動で使用する</code></pre>
-          <pre><code class="lua">-- コマンドライン
-assert(condition) -- conditionがtrueか確認する
+_update() -- 30fpsの更新タイミング毎に呼ばれる
+_update60() -- 60fpsの更新タイミング毎に呼ばれる</code></pre>
+
+          <h6>コマンドライン</h6>
+          <pre><code class="lua">assert(condition) -- conditionがtrueか確認する
 cd .. -- 親ディレクトリに移動する
 cd [dirname] -- 現在のディレクトリを変更する
 dir() -- 現在のディレクトリの要素一覧を表示する
 exit() -- PICO-8アプリを終了する
-export(filename.html) -- html/jsでゲームを書き出す
+export(filename.html, [cart1.p8, cart2.p8 ... cart15]) -- htmlでゲームを書き出す. 15までの拡張カートリッジの指定が可能
 export(filename.png) -- スプライトシートを書き出す
 export(filename.wav) -- 現在のSFX/音楽を書き出す
 export(filename%d.wav) -- すべてのSFXを通し番号つきのファイルとして書き出す
+extcmd(cmd) -- control screenshots; "label" = cart label; "screen" = screenshot; "rec" = start gif; "video" = save gif
 folder() -- ホストOSでカートリッジフォルダーを開く
 help() -- システムコマンドの要約を表示する
 import(filename.png) -- スプライトシートを読み込む. 128x128のpngで色がPICO-8のパレットに一致することが前提
@@ -315,170 +358,248 @@ info() -- カートリッジ情報を表示する
 install_demos() -- デモカートリッジをインストールする
 install_games() -- 代表的なBBSカートリッジをインストールする
 keyconfig() -- プレイヤーボタンのキーボード割り当てを設定する
-load(filename) -- カートリッジを読み込む. "@clip"を指定するとクリップボードから読み込む
+load("@clip") -- カートリッジをクリップボードから読み込む(BBS対応)
+load(filename) -- カートリッジを読み込む(マルチカートリッジ対応)
 ls() -- 現在のディレクトリの要素一覧を表示する
 menuitem(index, [label, callback]) -- ポーズメニューに要素(1-5)を追加する. ラベルとコールバックが指定されないと要素を削除する
 mkdir(dirname) -- ディレクトリを作成する
-printh(str, [filename, overwrite]) -- 文字列をホストOSのターミナル(または指定したファイル)に出力する. "@clip"を指定するとクリップボードに書き込む
+printh(str, [filename, overwrite]) -- 文字列をターミナルに出力する. 指定したファイルへの追記や上書きが可能
 reboot() -- PICO-8を再起動する
 resume() -- カートリッジの実行を再開する
 run() -- カートリッジを実行する
-save(filename) -- カートリッジを保存する. "@clip"を指定するとクリップボードに保存する
+save("@clip") -- カートリッジをクリップボードに保存する(BBS対応)
+save(filename) -- カートリッジを保存する
 shutdown() -- PICO-8アプリを終了する
 splore() -- カートリッジを閲覧する
-stat(x) -- 0でメモリ状態, 1でCPU状態, 4でクリップボードの内容(ユーザーがctrl-vを押した後に有効!)を出力する
+stat(x) -- システムの状態を取得する. 下記参照
 time() -- 最後に起動してからの経過秒を返す
 type(v) -- vの型(数値, 文字列, テーブル)を返す</code></pre>
-          <pre><code class="javascript">// javascript
-pico8_gpio[] // GPIOピンの読み書きをする</code></pre>
+
+          <h6>stats</h6>
+          <pre><code class="lua">stat(0) -- memory usage in [0..1024]
+stat(1) -- cpu usage; 1.0 == 100% cpu at 30fps
+stat(4) -- clipboard; after user pressed ctrl-v
+stat([16..19]) -- index of playing sfx on channels [0..3]
+stat([20..23]) -- note number (0..31) on channels [0..3]
+stat(32) -- mouse x coord; see "peek / poke" tab
+stat(33) -- mouse y coord; see "peek / poke" tab
+stat(34) -- mouse button bitmask; see "peek / poke" tab</code></pre>
+
+          <h6>JavaScript</h6>
+          <pre><code class="javascript">pico8_gpio[] // GPIOピンの読み書きをする</code></pre>
+
+          <h6>private functions (use carefully)</h6>
+          <pre><code class="lua">_get_frames_skipped() -- used automatically by _mainloop()
+_get_menu_item_selected(n) -- returns true or false if the n-th menu item is selected; n in [1..5]; used automatically by _mainloop()
+_mainloop() -- main pico-8's "while true"
+_pausemenu[n].callback() -- execute the n-th menu item's callback; n in [1..5]; used automatically by _mainloop()
+_set_mainloop_exists(n) -- ?
+_update_buttons() -- used automatically by _mainloop()
+holdframe() -- _draw(), _update()が自動で使用する</code></pre>
         </div>
 
         <!-- STRINGS -->
         <div role="tabpanel" class="tab-pane fade" id="strings">
+          <p><center><img style="border-radius: 5px;" src="img/glyphs.png" alt="" class="img-responsive"></center></p>
+
+          <h6>文字列操作</h6>
           <pre><code class="lua">#s -- 文字列の長さ
-"three "..4 -- 文字列の結合
-sub(str, from, [to]) -- 部分文字列</code></pre>
+"three " .. 4 -- 文字列の結合
+sub(str, from, [to]) -- 部分文字列
+"123.45" + 0 -- cast parseable string to number; "0xAF" format for hex</code></pre>
+
+          <h6>special characters</h6>
+          <pre><code class="lua">print("l:\x8b r:\x91 u:\x94 d:\x83 o:\x8e x:\x97")</code></pre>
         </div>
 
         <!-- TABLES -->
         <div role="tabpanel" class="tab-pane fade" id="tables">
-          <pre><code class="lua">-- テーブル
-add(t, v) -- 値vを追加する
+          <h6>テーブル操作</h6>
+          <pre><code class="lua">add(t, v) -- 値vをテーブルに追加する
 all(t) -- ループ処理'for v in all(t)'で使用する
 count(t) -- テーブルの要素数を返す
 del(t, v) -- 値がvの最初の要素を削除する
 foreach(t, f) -- 各要素について関数fを呼ぶ
 pairs(t) -- ループ処理'for k,v in pairs(t)'で使用する</code></pre>
-          <pre><code class="lua">-- メタテーブル
-setmetatable(t, mt) -- テーブルtにメタテーブルmtをセットする</code></pre>
-          <p><center><a href="http://www.lexaloffle.com/bbs/?tid=3342" target="_blank" style="color: white;">メタテーブル解説ページを読む</a></center></p>
+
+          <h6>メタテーブル :: <u><a href="http://www.lexaloffle.com/bbs/?tid=3342" target="_blank" style="color: white;">メタテーブル解説ページを読む</a></u></h6>
+          <pre><code class="lua">mt = {} -- init metatable
+setmetatable(t, mt) -- set metatable mt to table t</code></pre>
+
+          <h6>メタテーブル :: special keys</h6>
+          <pre><code class="lua">-- object oriented programming; invoked as 't:foo()' / 't:bar()'
+fun = {}
+function fun.foo(t) dosomething() end
+function fun.bar(t) dosomethingmore() end
+mt.__index = fun
+
+-- property assignment; invoked when calling 't[k] = v'
+function mt.__newindex(t, k, v) rawset(t, k, v) end
+
+-- weak references; keys and / or values
+mt.__mode = "k" or "v" or "kv"
+
+-- treat a table like a function; invoked when calling 't()'
+function mt.__call(t) dosomething() end
+
+-- hide metatable; returned by 'getmetatable(t)'
+public_mt = {}
+mt.__metatable = public_mt
+
+-- string casting; returned by 'tostring(t)'
+function mt.__tostring(t) return tostring(t) end
+
+-- table length; returned by '#t'
+function mt.__len(t) return #t end</code></pre>
+
+          <h6>メタテーブル :: mathematic operators</h6>
+          <pre><code class="lua">-- unary minus; returned by '-t'
+function mt.__unm(t) return -t end
+
+-- addition; returned by 'a + b'
+function mt.__add(a, b) return a + b end
+
+-- subtraction; returned by 'a - b'
+function mt.__sub(a, b) return a - b end
+
+-- multiplication; returned by 'a * b'
+function mt.__mul(a, b) return a * b end
+
+-- division; returned by 'a / b'
+function mt.__div(a, b) return a / b end
+
+-- modulo; returned by 'a % b'
+function mt.__mod(a, b) return a % b end
+
+-- involution; returned by 'a ^ b'
+function mt.__pow(a, b) return a ^ b end
+
+-- concatenation; returned by 'a .. b'
+function mt.__concat(a, b) return a .. b end</code></pre>
+
+          <h6>メタテーブル :: comparison operators</h6>
+          <pre><code class="lua">-- check for equality; returned by 'a == b'
+function mt.__eq(a, b) return a == b end
+
+-- check for less-than; returned by 'a < b'
+function mt.__lt(a, b) return a < b end
+
+-- check for less-than-or-equal; returned by 'a <= b'
+function mt.__le(a, b) return a <= b end</code></pre>
         </div>
 
         <!-- KEYS -->
         <div role="tabpanel" class="tab-pane fade" id="keys">
           <div class="row">
             <!-- KEYS_0 -->
-            <div class="col-md-3">
-              <h6>共通</h6>
-              <ul>
-                <li><strong>全画面表示</strong>: alt + enter / cmd + f</li>
-                <li><strong>終了</strong>: alt + f4 / cmd + q</li>
-                <li><strong>再読み込み＆実行</strong>: ctrl + r</li>
-                <li><strong>保存</strong>: ctrl + s</li>
-                <li><strong>消音</strong>: ctrl + m</li>
-                <li><strong>スクリーンショット</strong>: f6 / f1 / ctrl + 6</li>
-                <li><strong>ラベル画像保存</strong>: f7 / f2 / ctrl + 7</li>
-                <li><strong>録画開始</strong>: f8 / f3 / ctrl + 8</li>
-                <li><strong>動画保存</strong>: f9 / f4 / ctrl + 9</li>
-                <li><strong>キーボードカーソル</strong>: f10 / f5 / ctrl + 0</li>
-                <li><strong>編集モード切り替え</strong>: alt + right, left</li>
-                <li><strong>コマンドライン補完</strong>: tab</li>
-              </ul>
-              <h6>実行中</h6>
-              <ul>
-                <li><strong>ポーズメニュー</strong>: p / enter</li>
-                <li><strong>1P操作</strong>: cursors + zx / nm / cv</li>
-                <li><strong>2P操作</strong>: sdfe + tab, q / shift + a</li>
-              </ul>
+            <div class="col-md-6">
+              <h5><u>共通</u></h5>
+              <dl class="dl-horizontal">
+                <dt><strong>全画面表示</strong>:</dt> <dd><kbd>alt + enter</kbd> / <kbd>cmd + f</kbd></dd>
+                <dt><strong>終了</strong>:</dt> <dd><kbd>alt + f4</kbd> / <kbd>cmd + q</kbd></dd>
+                <dt><strong>再読み込み＆実行</strong>:</dt> <dd><kbd>ctrl + r</kbd></dd>
+                <dt><strong>保存</strong>:</dt> <dd><kbd>ctrl + s</kbd></dd>
+                <dt><strong>消音</strong>:</dt> <dd><kbd>ctrl + m</kbd></dd>
+                <dt><strong>FPS表示</strong>:</dt> <dd><kbd>ctrl + 1</kbd></dd>
+                <dt><strong>スクリーンショット</strong>:</dt> <dd><kbd>ctrl + 6</kbd> / <kbd>f6</kbd> / <kbd>f1</kbd></dd>
+                <dt><strong>ラベル画像保存</strong>:</dt> <dd><kbd>ctrl + 7</kbd> / <kbd>f7</kbd> / <kbd>f2</kbd></dd>
+                <dt><strong>録画開始</strong>:</dt> <dd><kbd>ctrl + 8</kbd> / <kbd>f8</kbd> / <kbd>f3</kbd></dd>
+                <dt><strong>動画保存</strong>:</dt> <dd><kbd>ctrl + 9</kbd> / <kbd>f9</kbd> / <kbd>f4</kbd></dd>
+                <dt><strong>キーボードカーソル</strong>:</dt> <dd><kbd>f10</kbd></dd>
+                <dt><strong>編集モード切り替え</strong>:</dt> <dd><kbd>alt + right</kbd> / <kbd>alt + left</kbd></dd>
+                <dt><strong>コマンドライン補完</strong>:</dt> <dd><kbd>tab</kbd></dd>
+              </dl>
+
+              <h5><u>SPLORE</u></h5>
+              <dl class="dl-horizontal">
+                <dt><strong>リスト選択</strong>:</dt> <dd><kbd>left</kbd> / <kbd>right</kbd></dd>
+                <dt><strong>カートリッジ選択</strong>:</dt> <dd><kbd>up</kbd> / <kbd>down</kbd> / <kbd>home</kbd> / <kbd>end</kbd> / <kbd>pageup</kbd> / <kbd>pagedown</kbd></dd>
+                <dt><strong>カートリッジ起動</strong>:</dt> <dd><kbd>x</kbd> / <kbd>o</kbd> / <kbd>menu</kbd></dd>
+                <dt><strong>お気に入り登録</strong>:</dt> <dd><kbd>f</kbd></dd>
+              </dl>
+
+              <h5><u>スプライト / マップ エディター</u></h5>
+              <dl class="dl-horizontal">
+                <dt><strong>取り消し</strong>:</dt> <dd><kbd>ctrl + z</kbd></dd>
+                <dt><strong>コピー (BBS対応)</strong>:</dt> <dd><kbd>ctrl + c</kbd></dd>
+                <dt><strong>ペースト (BBS対応)</strong>:</dt> <dd><kbd>ctrl + v</kbd></dd>
+                <dt><strong>表示範囲移動</strong>:</dt> <dd><kbd>space</kbd> / <kbd>mmb</kbd></dd>
+                <dt><strong>スプライト切り替え</strong>:</dt> <dd><kbd>q</kbd> / <kbd>w</kbd></dd>
+                <dt><strong>色切り替え</strong>:</dt> <dd><kbd>1</kbd> / <kbd>2</kbd></dd>
+                <dt><strong>タブ切り替え</strong>:</dt> <dd><kbd>+</kbd> / <kbd>-</kbd></dd>
+                <dt><strong>フルスクリーン編集</strong>:</dt> <dd><kbd>tab</kbd></dd>
+                <dt><strong>ズーム</strong>:</dt> <dd><kbd>mousewheel</kbd></dd>
+                <dt><strong>縦方向反転</strong>:</dt> <dd><kbd>f</kbd></dd>
+                <dt><strong>横方向反転</strong>:</dt> <dd><kbd>v</kbd></dd>
+                <dt><strong>回転</strong>:</dt> <dd><kbd>r</kbd></dd>
+                <dt><strong>移動</strong>:</dt> <dd><kbd>cursors</kbd></dd>
+                <h6>ドローツール</h6>
+                <dt><strong>色置き換え</strong>:</dt> <dd><kbd>lctrl</kbd></dd>
+                <dt><strong>色取得</strong>:</dt> <dd><kbd>rmb</kbd></dd>
+                <h6>スタンプツール</h6>
+                <dt><strong>透過ありスタンプ</strong>:</dt> <dd><kbd>lctrl</kbd></dd>
+                <h6>選択ツール</h6>
+                <dt><strong>複数スプライト選択</strong>:</dt> <dd><kbd>shift + drag</kbd></dd>
+              </dl>
             </div>
 
             <!-- KEYS_1 -->
-            <div class="col-md-3">
-              <h6>コードエディター</h6>
-              <ul>
-                <li><strong>領域選択</strong>: shift</li>
-                <li><strong>カット</strong>: ctrl + x</li>
-                <li><strong>コピー</strong>: ctrl + c</li>
-                <li><strong>ペースト</strong>: ctrl + v</li>
-                <li><strong>取り消し</strong>: ctrl + z</li>
-                <li><strong>やり直し</strong>: ctrl + y</li>
-                <li><strong>行コピー</strong>: ctrl + d</li>
-                <li><strong>検索</strong>: ctrl + f</li>
-                <li><strong>検索繰り返し</strong>: ctrl + g</li>
-                <li><strong>先頭 / 終端</strong>: ctrl + up, down</li>
-                <li><strong>関数ジャンプ</strong>: alt + up, down</li>
-                <li><strong>グリフ入力</strong>: shift + a..z</li>
-                <li><strong>グリフモード</strong>: ctrl + k</li>
-              </ul>
-              <h6>SPLORE</h6>
-              <ul>
-                <li><strong>リスト選択</strong>: left / right</li>
-                <li><strong>カートリッジ選択</strong>: up / down</li>
-                <li><strong>カートリッジ起動</strong>: x / o / menu</li>
-                <li><strong>お気に入り登録</strong>: f</li>
-              </ul>
-            </div>
+            <div class="col-md-6">
+              <h5><u>コードエディター</u></h5>
+              <dl class="dl-horizontal">
+                <dt><strong>skip across words</strong>:</dt> <dd><kbd>ctrl + left</kbd> / <kbd>ctrl + right</kbd></dd>
+                <dt><strong>領域選択</strong>:</dt> <dd><kbd>shift</kbd></dd>
+                <dt><strong>単語選択</strong>:</dt> <dd><kbd>double click</kbd></dd>
+                <dt><strong>カット</strong>:</dt> <dd><kbd>ctrl + x</kbd></dd>
+                <dt><strong>コピー</strong>:</dt> <dd><kbd>ctrl + c</kbd></dd>
+                <dt><strong>ペースト</strong>:</dt> <dd><kbd>ctrl + v</kbd></dd>
+                <dt><strong>取り消し</strong>:</dt> <dd><kbd>ctrl + z</kbd></dd>
+                <dt><strong>やり直し</strong>:</dt> <dd><kbd>ctrl + y</kbd></dd>
+                <dt><strong>インデント</strong>:</dt> <dd><kbd>tab</kbd></dd>
+                <dt><strong>インデント取り消し</strong>:</dt> <dd><kbd>shift + tab</kbd></dd>
+                <dt><strong>行複製</strong>:</dt> <dd><kbd>ctrl + d</kbd></dd>
+                <dt><strong>検索</strong>:</dt> <dd><kbd>ctrl + f</kbd></dd>
+                <dt><strong>検索繰り返し</strong>:</dt> <dd><kbd>ctrl + g</kbd></dd>
+                <dt><strong>関数ジャンプ</strong>:</dt> <dd><kbd>alt + up</kbd> / <kbd>alt + down</kbd></dd>
+                <dt><strong>先頭 / 終端</strong>:</dt> <dd><kbd>ctrl + up</kbd> / <kbd>ctrl + down</kbd></dd>
+                <dt><strong>ボタングリフ</strong>:</dt> <dd><kbd>shift + l, r, u, d, x, o</kbd></dd>
+                <dt><strong>アイコングリフ</strong>:</dt> <dd><kbd>shift + qwetyipasfghjkzcvbnm</kbd></dd>
+                <dt><strong>グリフモード</strong>:</dt> <dd><kbd>ctrl + k</kbd></dd>
+              </dl>
 
-            <!-- KEYS_2 -->
-            <div class="col-md-3">
-              <h6>スプライト / マップ エディター</h6>
-              <ul>
-                <li><strong>取り消し</strong>: ctrl + z</li>
-                <li><strong>コピー</strong>: ctrl + c</li>
-                <li><strong>ペースト</strong>: ctrl + v</li>
-                <li><strong>表示範囲移動</strong>: space / mmb</li>
-                <li><strong>スプライト切り替え</strong>: q / w</li>
-                <li><strong>色切り替え</strong>: 1 / 2</li>
-                <li><strong>タブ切り替え</strong>: + / -</li>
-                <li><strong>フルスクリーン編集</strong>: tab</li>
-                <li><strong>ズーム</strong>: mousewheel</li>
-                <li><strong>縦方向反転</strong>: f</li>
-                <li><strong>横方向反転</strong>: v</li>
-                <li><strong>回転</strong>: r</li>
-                <li><strong>移動</strong>: cursors</li>
-                <li>
-                  <strong>ドローツール</strong>:
-                  <ul>
-                    <li><strong>色置き換え</strong>: lctrl</li>
-                    <li><strong>色取得</strong>: rmb</li>
-                  </ul>
-                </li>
-                <li>
-                  <strong>スタンプツール</strong>:
-                  <ul>
-                    <li><strong>透過ありスタンプ</strong>: lctrl</li>
-                  </ul>
-                </li>
-                <li>
-                  <strong>選択ツール</strong>:
-                  <ul>
-                    <li><strong>複数スプライト選択</strong>: shift + drag</li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-
-            <!-- KEYS_3 -->
-            <div class="col-md-3">
-              <h6>SFX / 音楽 エディター</h6>
-              <ul>
-                <li><strong>再生 / 停止</strong>: space</li>
-                <li><strong>コピー</strong>: ctrl + c</li>
-                <li><strong>ペースト</strong>: ctrl + v</li>
-                <li><strong>複数ノート選択</strong>: shift + lmb</li>
-                <li><strong>速度変更</strong>: &lt; / &gt;</li>
-                <li><strong>移動</strong>: home, end, pageup/down, mousewheel</li>
-                <li><strong>パターン切り替え</strong>: + / -</li>
-                <li><strong>Cmペンタトニック自動調整</strong>: ctrl</li>
-                <li><strong>速度4倍</strong>: shift</li>
-                <li><strong>ループ再生解除</strong>: a</li>
-                <li><strong>削除</strong>: backspace</li>
-                <li>
-                  <strong>エフェクト</strong>:
-                  <ul>
-                    <li><strong>0</strong>: なし</li>
-                    <li><strong>1</strong>: スライド</li>
-                    <li><strong>2</strong>: ビブラート</li>
-                    <li><strong>3</strong>: ドロップ(ドラムキック!)</li>
-                    <li><strong>4</strong>: フェードイン</li>
-                    <li><strong>5</strong>: フェードアウト</li>
-                    <li><strong>6</strong>: 高速アルペジオ(4ノート)</li>
-                    <li><strong>7</strong>: 低速アルペジオ(4ノート)</li>
-                  </ul>
-                </li>
-              </ul>
+              <h5><u>SFX / 音楽 エディター</u></h5>
+              <dl class="dl-horizontal">
+                <dt><strong>再生 / 停止</strong>:</dt> <dd><kbd>space</kbd></dd>
+                <dt><strong>コピー</strong>:</dt> <dd><kbd>ctrl + c</kbd></dd>
+                <dt><strong>ペースト</strong>:</dt> <dd><kbd>ctrl + v</kbd></dd>
+                <dt><strong>全ノート設定</strong>:</dt> <dd><kbd>shift + lmb</kbd></dd>
+                <dt><strong>速度変更</strong>:</dt> <dd><kbd>&lt;</kbd> / <kbd>&gt;</kbd></dd>
+                <dt><strong>移動</strong>:</dt> <dd><kbd>home</kbd>, <kbd>end</kbd>, <kbd>pageup</kbd>, <kbd>pagedown</kbd>, <kbd>mousewheel</kbd></dd>
+                <dt><strong>パターン切り替え</strong>:</dt> <dd><kbd>+</kbd> / <kbd>-</kbd></dd>
+                <dt><strong>Cmペンタトニック自動調整</strong>:</dt> <dd><kbd>ctrl</kbd></dd>
+                <dt><strong>速度4倍</strong>:</dt> <dd><kbd>shift</kbd></dd>
+                <dt><strong>ループ再生解除</strong>:</dt> <dd><kbd>a</kbd></dd>
+                <dt><strong>削除</strong>:</dt> <dd><kbd>backspace</kbd></dd>
+                <h6>エフェクト</h6>
+                <dt><strong>0</strong> ::</dt> <dd>なし</dd>
+                <dt><strong>1</strong> ::</dt> <dd>スライド</dd>
+                <dt><strong>2</strong> ::</dt> <dd>ビブラート</dd>
+                <dt><strong>3</strong> ::</dt> <dd>ドロップ(ドラムキック!)</dd>
+                <dt><strong>4</strong> ::</dt> <dd>フェードイン</dd>
+                <dt><strong>5</strong> ::</dt> <dd>フェードアウト</dd>
+                <dt><strong>6</strong> ::</dt> <dd>高速アルペジオ(4ノート)</dd>
+                <dt><strong>7</strong> ::</dt> <dd>低速アルペジオ(4ノート)</dd>
+              </dl>
             </div>
           </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="row">
+        <div class="col-md-4" style="text-align: left;">pico-8 by <a href="http://www.lexaloffle.com/" target="_blank">lexaloffle</a> <img src="img/lexaloffle.png" style="width: 25px;"></img></div>
+        <div class="col-md-4" style="text-align: center;">made with <i class="fa fa-heart text-danger"></i> by <a href="https://neko250.github.io" target="_blank">neko250</a></div>
+        <div class="col-md-4" style="text-align: right;">contribute on <a href="https://github.com/Neko250/pico8-api" target="_blank">github</a> <i class="fa fa-lg fa-code-fork text-primary"></i></div>
       </div>
     </div>
 
