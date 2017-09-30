@@ -228,51 +228,51 @@ sqrt(x) -- xの平方根
 srand(x) -- 乱数のシードを設定する</code></pre>
 
           <h6>演算子</h6>
-          <pre><code class="lua">a = b -- assignment
-a + b -- sum
-a - b -- sub
-a * b -- mul
-a / b -- div
-a % b -- mod
-a ^ b -- pow
-a += b -- sum to
-a -= b -- sub to
-a *= b -- mul to
-a /= b -- div to
-a %= b -- mod to
-a ^= b -- pow to
-a == b -- compare equals
-a ~= b -- compare not equals
-a != b -- compare not equals
-a &gt; b -- compare greater than
-a &lt; b -- compare less than
-a &gt;= b -- compare greater than or equals
-a &lt;= b -- compare less than or equals
-not a -- boolean negation
-a and b -- boolean conjunction
-a or b -- boolean disjunction
-(a) -- operation delimiters</code></pre>
+          <pre><code class="lua">a = b -- 代入
+a + b -- 和
+a - b -- 差
+a * b -- 積
+a / b -- 商
+a % b -- 余り
+a ^ b -- べき乗
+a += b -- 値に加算する
+a -= b -- 値から引く
+a *= b -- 値に掛ける
+a /= b -- 値を割る
+a %= b -- 値を割った余りにする
+a ^= b -- 値をべき乗する
+a == b -- 等しいか
+a ~= b -- 等しくないか
+a != b -- 等しくないか
+a &gt; b -- aがbより大きいか比較する
+a &lt; b -- aがbより小さいか比較する
+a &gt;= b -- aがb以上か比較する
+a &lt;= b -- aがb未満か比較する
+not a -- 論理否定
+a and b -- 論理積
+a or b -- 論理和
+(a) -- 演算の区切り</code></pre>
 
           <h6>flow control</h6>
           <pre><code class="lua">::label:: -- label
-goto label -- jump
+goto label -- ラベルにジャンプする
 
-if (&lt;condition&gt;) -- inline if
+if (&lt;condition&gt;) -- 1行版if
 
 if &lt;condition&gt; then
- -- if block
+ -- ifブロック
 elseif &lt;condition&gt; then
- -- elseif block
+ -- elseifブロック
 else
- -- else block
+ -- elseブロック
 end
 
 while &lt;condition&gt; do
- -- while block
+ -- whileブロック
 end
 
 for &lt;var&gt; = &lt;first&gt;, &lt;last&gt;, &lt;step&gt; do
- -- for block
+ -- forブロック
 end</code></pre>
         </div>
 
@@ -314,8 +314,8 @@ stat(32) -- x座標を取得する
 stat(33) -- y座標を取得する
 stat(34) -- ボタン状態をビット列で取得する(1=左ボタン, 2=右ボタン, 4=中央ボタン)</code></pre>
 
-          <h6>拡張グラフィックスモード</h6>
-          <pre><code class="lua">poke(0x5f2c, 0) -- standard, 128x128
+          <h6>拡張描画モード</h6>
+          <pre><code class="lua">poke(0x5f2c, 0) -- 標準, 128x128
 poke(0x5f2c, 1) -- 水平方向に引き伸ばし, 64x128
 poke(0x5f2c, 2) -- 垂直方向に引き伸ばし, 128x64
 poke(0x5f2c, 3) -- 拡大, 64x64
@@ -325,11 +325,11 @@ poke(0x5f2c, 6) -- 右半分の鏡像
 poke(0x5f2c, 7) -- 左上4分の1の鏡像</code></pre>
 
           <h6>raspberry pi / pocketchip gpio</h6>
-          <pre><code class="lua">-- run pico-8 as root ("sudo pico-8")
--- values in [0..255]
-poke(0x5f80, val) -- send val to gpio0
-poke(0x5f81, val) -- send val to gpio1
--- et cetera</code></pre>
+          <pre><code class="lua">-- ルート権限でpico-8を実行する ("sudo pico-8")
+-- 値は0-255の範囲
+poke(0x5f80, val) -- 値をgpio0に送る
+poke(0x5f81, val) -- 値をgpio1に送る
+-- 等々</code></pre>
         </div>
 
         <!-- PICO-8 -->
@@ -381,16 +381,16 @@ stat(1) -- cpu usage; 1.0 == 100% cpu at 30fps
 stat(4) -- clipboard; after user pressed ctrl-v
 stat([16..19]) -- index of playing sfx on channels [0..3]
 stat([20..23]) -- note number (0..31) on channels [0..3]
-stat(32) -- mouse x coord; see "peek / poke" tab
-stat(33) -- mouse y coord; see "peek / poke" tab
+stat(32) -- マウスのx座標; "拡張設定"タブを参照のこと
+stat(33) -- マウスのy座標; "拡張設定"タブを参照のこと
 stat(34) -- mouse button bitmask; see "peek / poke" tab</code></pre>
 
           <h6>JavaScript</h6>
           <pre><code class="javascript">pico8_gpio[] // GPIOピンの読み書きをする</code></pre>
 
           <h6>private functions (use carefully)</h6>
-          <pre><code class="lua">_get_frames_skipped() -- used automatically by _mainloop()
-_get_menu_item_selected(n) -- returns true or false if the n-th menu item is selected; n in [1..5]; used automatically by _mainloop()
+          <pre><code class="lua">_get_frames_skipped() -- _mainloop()に自動的に使用される
+_get_menu_item_selected(n) -- n番目のメニューアイテムが選択されているかをtrueまたはfalseで返す; nは1から5の範囲; _mainloop()に自動的に使用される 
 _mainloop() -- main pico-8's "while true"
 _pausemenu[n].callback() -- execute the n-th menu item's callback; n in [1..5]; used automatically by _mainloop()
 _set_mainloop_exists(n) -- ?
@@ -427,16 +427,16 @@ pairs(t) -- ループ処理'for k,v in pairs(t)'で使用する</code></pre>
 setmetatable(t, mt) -- set metatable mt to table t</code></pre>
 
           <h6>メタテーブル :: special keys</h6>
-          <pre><code class="lua">-- object oriented programming; invoked as 't:foo()' / 't:bar()'
+          <pre><code class="lua">-- オブジェクト指向プログラミング; 't:foo()'または't:bar()'で実行する.
 fun = {}
 function fun.foo(t) dosomething() end
 function fun.bar(t) dosomethingmore() end
 mt.__index = fun
 
--- property assignment; invoked when calling 't[k] = v'
+-- プロパティの代入; 't[k] = v'で実行する.
 function mt.__newindex(t, k, v) rawset(t, k, v) end
 
--- weak references; keys and / or values
+-- 弱い参照; keys and / or values
 mt.__mode = "k" or "v" or "kv"
 
 -- treat a table like a function; invoked when calling 't()'
@@ -452,7 +452,7 @@ function mt.__tostring(t) return tostring(t) end
 -- table length; returned by '#t'
 function mt.__len(t) return #t end</code></pre>
 
-          <h6>メタテーブル :: mathematic operators</h6>
+          <h6>メタテーブル :: 算術演算子</h6>
           <pre><code class="lua">-- unary minus; returned by '-t'
 function mt.__unm(t) return -t end
 
@@ -599,7 +599,7 @@ function mt.__le(a, b) return a <= b end</code></pre>
       <div class="row">
         <div class="col-md-4" style="text-align: left;">pico-8 by <a href="http://www.lexaloffle.com/" target="_blank">lexaloffle</a> <img src="img/lexaloffle.png" style="width: 25px;"></img></div>
         <div class="col-md-4" style="text-align: center;">made with <i class="fa fa-heart text-danger"></i> by <a href="https://neko250.github.io" target="_blank">neko250</a></div>
-        <div class="col-md-4" style="text-align: right;">contribute on <a href="https://github.com/Neko250/pico8-api" target="_blank">github</a> (日本語版は<a href="https://github.com/kitao/pico8-api-jp" target="_blank">こちら</a>) <i class="fa fa-lg fa-code-fork text-primary"></i></div>
+        <div class="col-md-4" style="text-align: right;">contribute on <a href="https://github.com/Neko250/pico8-api" target="_blank">github</a><i class="fa fa-lg fa-code-fork text-primary"></i> (日本語版は<a href="https://github.com/kitao/pico8-api-jp" target="_blank">こちら</a>)</div>
       </div>
     </div>
 
