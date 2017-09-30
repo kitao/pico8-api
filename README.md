@@ -1,13 +1,23 @@
 # pico8-api-jp
 
-## What is PICO-8 ?
+Japanese version of the PICO-8 API cheatsheet by [Neko250](https://github.com/Neko250/pico8-api).
+
+## pico-8 api cheatsheet 日本語版
+
+Neko250さんが作成した、おしゃれで見やすいpico-8 api cheatsheetを日本語に翻訳してみました。
+
+- [PICO-8 API 早見表](https://kitao.github.io/pico8-api-jp/)
+
+## PICO-8とは？
 
 ![jelpi](https://raw.githubusercontent.com/Neko250/pico8-api/gh-pages/img/p8_jelpi.gif)
 
-PICO-8 is a fantasy console for making, sharing and playing tiny games and other computer programs. When you turn it on, the machine greets you with a shell for typing in Lua commands and provides simple built-in tools for creating your own cartridges.
+PICO-8は小さなゲームやプログラムを作って、遊んで、共有できる架空のゲームコンソールです。スイッチを入れるとあなた自身のゲームカートリッジを作るためのLua言語のシェルとシンプルなツール群が使えます。　
 
-PICO-8 is made by [Lexaloffle]().
+PICO-8は[Lexaloffle](https://www.lexaloffle.com/)によって開発されています。
 
-## License
+## ライセンス
+
+オリジナルのNeko250さんのライセンスに準じます。
 
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.

@@ -67,7 +67,7 @@
     <div id="content" class="container api">
       <!-- HEADER -->
       <div class="page-header">
-        <h1 style="display:inline">PICO-8 API 早見表</h1>
+        <h1>PICO-8 API 早見表</h1>
       </div>
 
       <!-- NAVBAR -->
@@ -77,7 +77,7 @@
         <li role="presentation"><a href="#audio" aria-controls="audio" role="tab" data-toggle="tab">オーディオ</a></li>
         <li role="presentation"><a href="#cartdata" aria-controls="data" role="tab" data-toggle="tab">データ</a></li>
         <li role="presentation"><a href="#coroutines" aria-controls="coroutines" role="tab" data-toggle="tab">コルーチン</a></li>
-        <li role="presentation"><a href="#graphics" aria-controls="graphics" role="tab" data-toggle="tab">グラフィックス</a></li>
+        <li role="presentation"><a href="#graphics" aria-controls="graphics" role="tab" data-toggle="tab">描画</a></li>
         <li role="presentation"><a href="#input" aria-controls="input" role="tab" data-toggle="tab">入力</a></li>
         <li role="presentation"><a href="#map" aria-controls="map" role="tab" data-toggle="tab">マップ</a></li>
         <li role="presentation"><a href="#math" aria-controls="math" role="tab" data-toggle="tab">数学</a></li>
@@ -160,7 +160,7 @@ yield() -- コルーチンの中で使用する. コルーチンの実行を再�
         <div role="tabpanel" class="tab-pane fade" id="graphics">
           <p><center><img style="border-radius: 5px;" src="img/colors.png" alt="" class="img-responsive"></center></p>
 
-          <h6>グラフィックス制御</h6>
+          <h6>描画制御</h6>
           <pre><code class="lua">camera([x, y]) -- カメラ位置を設定する
 circ(x, y, r, [col]) -- 円を描画する
 circfill(x, y, r, [col]) -- 塗りつぶされた円を描画する
@@ -375,8 +375,8 @@ stat(x) -- システムの状態を取得する. 下記参照
 time() -- 最後に起動してからの経過秒を返す
 type(v) -- vの型(数値, 文字列, テーブル)を返す</code></pre>
 
-          <h6>stats</h6>
-          <pre><code class="lua">stat(0) -- memory usage in [0..1024]
+          <h6>統計データ</h6>
+          <pre><code class="lua">stat(0) -- メモリ使用状態 [0..1024]
 stat(1) -- cpu usage; 1.0 == 100% cpu at 30fps
 stat(4) -- clipboard; after user pressed ctrl-v
 stat([16..19]) -- index of playing sfx on channels [0..3]
@@ -406,7 +406,7 @@ holdframe() -- _draw(), _update()が自動で使用する</code></pre>
           <pre><code class="lua">#s -- 文字列の長さ
 "three " .. 4 -- 文字列の結合
 sub(str, from, [to]) -- 部分文字列
-"123.45" + 0 -- cast parseable string to number; "0xAF" format for hex</code></pre>
+"123.45" + 0 -- 解釈可能な文字列を数値に変換する; "0xAF"形式で16進数になる</code></pre>
 
           <h6>special characters</h6>
           <pre><code class="lua">print("l:\x8b r:\x91 u:\x94 d:\x83 o:\x8e x:\x97")</code></pre>
@@ -477,7 +477,7 @@ function mt.__pow(a, b) return a ^ b end
 -- concatenation; returned by 'a .. b'
 function mt.__concat(a, b) return a .. b end</code></pre>
 
-          <h6>メタテーブル :: comparison operators</h6>
+          <h6>メタテーブル :: 比較演算子</h6>
           <pre><code class="lua">-- check for equality; returned by 'a == b'
 function mt.__eq(a, b) return a == b end
 
