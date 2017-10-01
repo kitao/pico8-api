@@ -7,12 +7,13 @@ Japanese version of the PICO-8 API cheatsheet by [Neko250](https://github.com/Ne
 Neko250さんが作成した、おしゃれで見やすいpico-8 api cheatsheetを日本語に翻訳してみました。
 
 - [PICO-8 API 早見表](https://kitao.github.io/pico8-api-jp/)
+- [PICO-8 日本語版マニュアル](https://github.com/kitao/pico8-jp/blob/master/pico8-jp.txt)
 
 ## PICO-8とは？
 
 ![jelpi](https://raw.githubusercontent.com/Neko250/pico8-api/gh-pages/img/p8_jelpi.gif)
 
-PICO-8は小さなゲームやプログラムを作って、遊んで、共有できる架空のゲームコンソールです。スイッチを入れるとあなた自身のゲームカートリッジを作るためのLua言語のシェルとシンプルなツール群が使えます。　
+PICO-8は小さなゲームやプログラムを作って、共有して、遊べる架空のゲーム機です。スイッチを入れるとあなた自身のゲームカートリッジを作るためのLua言語のシェルとシンプルなツール群が使えます。　
 
 PICO-8は[Lexaloffle](https://www.lexaloffle.com/)によって開発されています。
 

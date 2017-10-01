@@ -325,7 +325,7 @@ poke(0x5f2c, 6) -- 右半分の鏡像
 poke(0x5f2c, 7) -- 左上4分の1の鏡像</code></pre>
 
           <h6>raspberry pi / pocketchip gpio</h6>
-          <pre><code class="lua">-- ルート権限でpico-8を実行する ("sudo pico-8")
+          <pre><code class="lua">-- ルート権限でpico-8を実行する("sudo pico-8")
 -- 値は0-255の範囲
 poke(0x5f80, val) -- 値をgpio0に送る
 poke(0x5f81, val) -- 値をgpio1に送る
@@ -350,7 +350,7 @@ export(filename.html, [cart1.p8, cart2.p8 ... cart15]) -- htmlでゲームを書
 export(filename.png) -- スプライトシートを書き出す
 export(filename.wav) -- 現在のSFX/音楽を書き出す
 export(filename%d.wav) -- すべてのSFXを通し番号つきのファイルとして書き出す
-extcmd(cmd) -- control screenshots; "label" = cart label; "screen" = screenshot; "rec" = start gif; "video" = save gif
+extcmd(cmd) -- スクリーンショットを制御する; "label"でカートリッジ用; "screen"でスクリーンショット; "rec"でgifアニメ録画開始; "video"でgifアニメを保存
 folder() -- ホストOSでカートリッジフォルダーを開く
 help() -- システムコマンドの要約を表示する
 import(filename.png) -- スプライトシートを読み込む. 128x128のpngで色がPICO-8のパレットに一致することが前提
@@ -376,25 +376,25 @@ time() -- 最後に起動してからの経過秒を返す
 type(v) -- vの型(数値, 文字列, テーブル)を返す</code></pre>
 
           <h6>統計データ</h6>
-          <pre><code class="lua">stat(0) -- メモリ使用状態 [0..1024]
-stat(1) -- cpu usage; 1.0 == 100% cpu at 30fps
-stat(4) -- clipboard; after user pressed ctrl-v
-stat([16..19]) -- index of playing sfx on channels [0..3]
-stat([20..23]) -- note number (0..31) on channels [0..3]
+          <pre><code class="lua">stat(0) -- メモリ使用状態(0-1024)
+stat(1) -- CPU使用率; 1.0で30fps時に100%
+stat(4) -- クリップボード; ctrl-vを押した後に有効
+stat([16..19]) -- 指定チャネル(0-3)で再生中のサウンド番号
+stat([20..23]) -- 指定チャネル(0-3)で最低中のノート番号(0-31)
 stat(32) -- マウスのx座標; "拡張設定"タブを参照のこと
 stat(33) -- マウスのy座標; "拡張設定"タブを参照のこと
-stat(34) -- mouse button bitmask; see "peek / poke" tab</code></pre>
+stat(34) -- マウスボタンのビットマスク; "拡張設定"タブを参照のこと</code></pre>
 
           <h6>JavaScript</h6>
           <pre><code class="javascript">pico8_gpio[] // GPIOピンの読み書きをする</code></pre>
 
-          <h6>private functions (use carefully)</h6>
-          <pre><code class="lua">_get_frames_skipped() -- _mainloop()に自動的に使用される
-_get_menu_item_selected(n) -- n番目のメニューアイテムが選択されているかをtrueまたはfalseで返す; nは1から5の範囲; _mainloop()に自動的に使用される 
-_mainloop() -- main pico-8's "while true"
-_pausemenu[n].callback() -- execute the n-th menu item's callback; n in [1..5]; used automatically by _mainloop()
+          <h6>プライベート関数 (慎重に使用すること)</h6>
+          <pre><code class="lua">_get_frames_skipped() -- _mainloop()が自動で使用する
+_get_menu_item_selected(n) -- n番目のメニューアイテムが選択されているかをtrueまたはfalseで返す; nは(1-5)の範囲; _mainloop()が自動で使用する
+_mainloop() -- pico-8'の"while true"ループ
+_pausemenu[n].callback() -- n番目のメニューアイテムのコールバックを実行する; nは(1-5)の範囲; _mainloop()が自動で使用する
 _set_mainloop_exists(n) -- ?
-_update_buttons() -- used automatically by _mainloop()
+_update_buttons() -- _mainloop()が自動で使用する
 holdframe() -- _draw(), _update()が自動で使用する</code></pre>
         </div>
 
@@ -408,7 +408,7 @@ holdframe() -- _draw(), _update()が自動で使用する</code></pre>
 sub(str, from, [to]) -- 部分文字列
 "123.45" + 0 -- 解釈可能な文字列を数値に変換する; "0xAF"形式で16進数になる</code></pre>
 
-          <h6>special characters</h6>
+          <h6>特殊文字</h6>
           <pre><code class="lua">print("l:\x8b r:\x91 u:\x94 d:\x83 o:\x8e x:\x97")</code></pre>
         </div>
 
@@ -423,68 +423,68 @@ foreach(t, f) -- 各要素について関数fを呼ぶ
 pairs(t) -- ループ処理'for k,v in pairs(t)'で使用する</code></pre>
 
           <h6>メタテーブル :: <u><a href="http://www.lexaloffle.com/bbs/?tid=3342" target="_blank" style="color: white;">メタテーブル解説ページを読む</a></u></h6>
-          <pre><code class="lua">mt = {} -- init metatable
-setmetatable(t, mt) -- set metatable mt to table t</code></pre>
+          <pre><code class="lua">mt = {} -- メタテーブルを初期化する
+setmetatable(t, mt) -- テーブルtにメタテーブルmtを設定する</code></pre>
 
-          <h6>メタテーブル :: special keys</h6>
-          <pre><code class="lua">-- オブジェクト指向プログラミング; 't:foo()'または't:bar()'で実行する.
+          <h6>メタテーブル :: 特殊キー</h6>
+          <pre><code class="lua">-- オブジェクト指向プログラミング; 't:foo()'または't:bar()'で実行される
 fun = {}
 function fun.foo(t) dosomething() end
 function fun.bar(t) dosomethingmore() end
 mt.__index = fun
 
--- プロパティの代入; 't[k] = v'で実行する.
+-- プロパティの代入; 't[k] = v'で実行される
 function mt.__newindex(t, k, v) rawset(t, k, v) end
 
--- 弱い参照; keys and / or values
+-- 弱い参照; キーと(または)値
 mt.__mode = "k" or "v" or "kv"
 
--- treat a table like a function; invoked when calling 't()'
+-- テーブルを関数のように使用する; 't()'が実行されると呼ばれる
 function mt.__call(t) dosomething() end
 
--- hide metatable; returned by 'getmetatable(t)'
+-- メタテーブルを隠す; 'getmetatable(t)'が返る
 public_mt = {}
 mt.__metatable = public_mt
 
--- string casting; returned by 'tostring(t)'
+-- 文字列への変換; 'tostring(t)'で返る
 function mt.__tostring(t) return tostring(t) end
 
--- table length; returned by '#t'
+-- テーブルのサイズ; '#t'で返る
 function mt.__len(t) return #t end</code></pre>
 
           <h6>メタテーブル :: 算術演算子</h6>
-          <pre><code class="lua">-- unary minus; returned by '-t'
+          <pre><code class="lua">-- 単項マイナス; '-t'で返る
 function mt.__unm(t) return -t end
 
--- addition; returned by 'a + b'
+-- 加算; 'a + b'が返る
 function mt.__add(a, b) return a + b end
 
--- subtraction; returned by 'a - b'
+-- 減算; 'a - b'が返る
 function mt.__sub(a, b) return a - b end
 
--- multiplication; returned by 'a * b'
+-- 乗算; 'a * b'が返る
 function mt.__mul(a, b) return a * b end
 
--- division; returned by 'a / b'
+-- 除算; 'a / b'が返る
 function mt.__div(a, b) return a / b end
 
--- modulo; returned by 'a % b'
+-- 剰余; 'a % b'が返る
 function mt.__mod(a, b) return a % b end
 
--- involution; returned by 'a ^ b'
+-- べき乗; 'a ^ b'が返る
 function mt.__pow(a, b) return a ^ b end
 
--- concatenation; returned by 'a .. b'
+-- 連結; 'a .. b'が返る
 function mt.__concat(a, b) return a .. b end</code></pre>
 
           <h6>メタテーブル :: 比較演算子</h6>
-          <pre><code class="lua">-- check for equality; returned by 'a == b'
+          <pre><code class="lua">-- aがbと等しいか判定する; 'a == b'が返る
 function mt.__eq(a, b) return a == b end
 
--- check for less-than; returned by 'a < b'
+-- aがb未満か判定する; 'a < b'が返る
 function mt.__lt(a, b) return a < b end
 
--- check for less-than-or-equal; returned by 'a <= b'
+-- aがb以下か判定する; 'a <= b'が返る
 function mt.__le(a, b) return a <= b end</code></pre>
         </div>
 
@@ -521,8 +521,8 @@ function mt.__le(a, b) return a <= b end</code></pre>
               <h5><u>スプライト / マップ エディター</u></h5>
               <dl class="dl-horizontal">
                 <dt><strong>取り消し</strong>:</dt> <dd><kbd>ctrl + z</kbd></dd>
-                <dt><strong>コピー (BBS対応)</strong>:</dt> <dd><kbd>ctrl + c</kbd></dd>
-                <dt><strong>ペースト (BBS対応)</strong>:</dt> <dd><kbd>ctrl + v</kbd></dd>
+                <dt><strong>コピー(BBS対応)</strong>:</dt> <dd><kbd>ctrl + c</kbd></dd>
+                <dt><strong>ペースト(BBS対応)</strong>:</dt> <dd><kbd>ctrl + v</kbd></dd>
                 <dt><strong>表示範囲移動</strong>:</dt> <dd><kbd>space</kbd> / <kbd>mmb</kbd></dd>
                 <dt><strong>スプライト切り替え</strong>:</dt> <dd><kbd>q</kbd> / <kbd>w</kbd></dd>
                 <dt><strong>色切り替え</strong>:</dt> <dd><kbd>1</kbd> / <kbd>2</kbd></dd>
@@ -547,7 +547,7 @@ function mt.__le(a, b) return a <= b end</code></pre>
             <div class="col-md-6">
               <h5><u>コードエディター</u></h5>
               <dl class="dl-horizontal">
-                <dt><strong>skip across words</strong>:</dt> <dd><kbd>ctrl + left</kbd> / <kbd>ctrl + right</kbd></dd>
+                <dt><strong>単語単位の移動</strong>:</dt> <dd><kbd>ctrl + left</kbd> / <kbd>ctrl + right</kbd></dd>
                 <dt><strong>領域選択</strong>:</dt> <dd><kbd>shift</kbd></dd>
                 <dt><strong>単語選択</strong>:</dt> <dd><kbd>double click</kbd></dd>
                 <dt><strong>カット</strong>:</dt> <dd><kbd>ctrl + x</kbd></dd>
